@@ -15,10 +15,12 @@ export class ClienteService {
     private apiUrl = environment.apiEndpoint + "/api/cliente/";
     token: any;
     username: any;
+    clienteRow: any;
 
     constructor(private http: HttpClient) {
         this.data = JSON.parse(localStorage.getItem('AdminUser'));
         this.token = this.data.token;
+        this.clienteRow = new ClienteModel();
     }
 
     public Add(clienteModel: ClienteModel) {
@@ -41,12 +43,14 @@ export class ClienteService {
 
     // Get All Role By ID
     public GetById(id_cli) {
-        var editUrl = this.apiUrl + '/' + id_cli;
+        var editUrl = this.apiUrl + id_cli;
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        return this.http.get<ClienteModel>(editUrl).pipe(tap(data => data),
+        headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
+        return this.http.get<ClienteModel>(editUrl,{ headers: headers }).pipe(tap(data =>  data),
             catchError(this.handleError)
         );
     }
+
 
     // Update Role
     public Update(clientemodel: ClienteModel) {

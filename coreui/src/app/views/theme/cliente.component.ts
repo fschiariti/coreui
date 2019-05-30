@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef,  ChangeDetectorRef} from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { getStyle, rgbToHex } from '@coreui/coreui/dist/js/coreui-utilities';
 import { MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
@@ -34,12 +34,20 @@ export class ClienteComponent  implements OnInit {
   dataSource: any;
 
 
-  constructor(@Inject(DOCUMENT) private _document: any, clienteService: ClienteService) {
+  constructor(@Inject(DOCUMENT) private _document: any, clienteService: ClienteService, private changeDetectorRefs: ChangeDetectorRef) {
     this._clienteService = clienteService;
 
   }
   
   ngOnInit(): void {
+    this.genGrid();
+  }
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  genGrid() 
+  {
     this._clienteService.GetAll().subscribe(
         allcliente => {
             this.ClienteList = allcliente
@@ -50,9 +58,7 @@ export class ClienteComponent  implements OnInit {
           },
         error => this.errorMessage = <any>error
     );
-  }
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+
   }
 
   ExportTOExcel() 
@@ -70,6 +76,34 @@ export class ClienteComponent  implements OnInit {
     this.ClienteModel.nombre = "";
     this.infoModal.show();
 
+  }
+
+  // On Submit
+  onSubmit() {
+    if (this.ClienteModel.id_cli != "") {
+      this._clienteService.Update(this.ClienteModel).subscribe(
+        cliente => {
+            console.log(cliente);
+          },
+        error => this.errorMessage = <any>error
+      );
+  
+    } else {
+      this._clienteService.Add(this.ClienteModel).subscribe(
+        cliente => {
+            console.log(cliente);
+          },
+        error => this.errorMessage = <any>error
+      );  
+    }
+    console.log(this.ClienteModel);
+    this.infoModal.hide();
+    //this.genGrid();
+    this.refresh();
+  }
+
+  refresh() {
+      this.changeDetectorRefs.detectChanges();
   }
 
   selectRow(row) {

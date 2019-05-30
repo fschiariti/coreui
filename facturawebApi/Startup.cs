@@ -15,16 +15,16 @@ using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Reflection;
 using System.IO;
-
 using facturawebApi.Concrete;
 using facturawebApi.Interface;
 using facturawebApi.DataModel;
-
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using facturawebApi.Common;
+using facturawebApi.Mappings;
+
 
 
 
@@ -92,8 +92,8 @@ namespace facturawebApi
 
             // Start Registering and Initializing AutoMapper
 
-            //Mapper.Initialize(cfg => cfg.AddProfile<MappingProfile>());
-            //services.AddAutoMapper();
+            Mapper.Initialize(cfg => cfg.AddProfile<MappingProfile>());
+            services.AddAutoMapper();
 
             // End Registering and Initializing AutoMapper
 

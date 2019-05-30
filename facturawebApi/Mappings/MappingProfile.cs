@@ -22,6 +22,12 @@ namespace facturawebApi.Mappings
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
 
+            CreateMap<ClienteViewModel, Cliente>()
+                .ForMember(dest => dest.id_cli, opt => opt.MapFrom(src => src.id_cli))
+                .ForMember(dest => dest.cod_cli, opt => opt.MapFrom(src => src.cod_cli))
+                .ForMember(dest => dest.nombre, opt => opt.MapFrom(src => src.nombre))
+                .ForMember(dest => dest.nro_doc, opt => opt.MapFrom(src => src.nro_doc));
+
         }
     }
 }

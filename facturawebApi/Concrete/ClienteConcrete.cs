@@ -25,12 +25,55 @@ namespace facturawebApi.Concrete
             _configuration = configuration;
         }
 
-        public List<Cliente> GetAllCliente()
+        public bool CheckExists(string nombre)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Cliente> GetAll()
         {
             var result = (from Cliente in _context.Cliente
                           select Cliente).ToList();
 
             return result;
+        }
+
+        public Cliente GetById(int id)
+        {
+            var result = (from Cliente in _context.Cliente  where Cliente.id_cli == id
+                          select Cliente).FirstOrDefault();
+
+            return result;
+
+        }
+
+        public void Insert(Cliente cliente)
+        {
+            _context.Cliente.Add(cliente);
+            _context.SaveChanges();
+
+//            throw new NotImplementedException();
+        }
+
+        public bool Update(Cliente cliente)
+        {
+            _context.Entry(cliente).Property(x => x.nombre).IsModified = true;
+            var result = _context.SaveChanges();
+            if (result > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+            throw new NotImplementedException();
         }
     }
 }
