@@ -23,14 +23,6 @@ export class ClienteService {
         this.clienteRow = new ClienteModel();
     }
 
-    public Add(clienteModel: ClienteModel) {
-        let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
-        return this.http.post<any>(this.apiUrl, clienteModel, { headers: headers })
-            .pipe(
-                catchError(this.handleError)
-            );
-    }
 
     // Get All Role
     public GetAll() {
@@ -63,6 +55,17 @@ export class ClienteService {
             );
     }
 
+    // Add Role
+    public Add(clienteModel: ClienteModel) {
+        let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
+        return this.http.post<any>(this.apiUrl, clienteModel, { headers: headers })
+            .pipe(
+                catchError(this.handleError)
+            );
+    }
+
+    // Delete
     public Delete(id_cli) {
         var deleteUrl = this.apiUrl + '/' + id_cli;
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });

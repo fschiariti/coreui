@@ -71,7 +71,7 @@ export class ClienteComponent  implements OnInit {
   }
 
   nuevo() {
-    this.ClienteModel.id_cli = "";
+    this.ClienteModel.id_cli = 0;
     this.ClienteModel.cod_cli = "";
     this.ClienteModel.nombre = "";
     this.infoModal.show();
@@ -80,10 +80,11 @@ export class ClienteComponent  implements OnInit {
 
   // On Submit
   onSubmit() {
-    if (this.ClienteModel.id_cli != "") {
+    if (this.ClienteModel.id_cli != 0) {
       this._clienteService.Update(this.ClienteModel).subscribe(
         cliente => {
             console.log(cliente);
+            this.refresh();
           },
         error => this.errorMessage = <any>error
       );
@@ -92,6 +93,7 @@ export class ClienteComponent  implements OnInit {
       this._clienteService.Add(this.ClienteModel).subscribe(
         cliente => {
             console.log(cliente);
+            this.refresh();
           },
         error => this.errorMessage = <any>error
       );  
@@ -99,11 +101,15 @@ export class ClienteComponent  implements OnInit {
     console.log(this.ClienteModel);
     this.infoModal.hide();
     //this.genGrid();
-    this.refresh();
+
   }
 
+
+
   refresh() {
-      this.changeDetectorRefs.detectChanges();
+    this.genGrid();
+//    this.dataSource = new MatTableDataSource(this.ClienteList);
+//    this.changeDetectorRefs.detectChanges();
   }
 
   selectRow(row) {

@@ -27,7 +27,8 @@ namespace facturawebApi.Concrete
 
         public bool CheckExists(string nombre)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return false;
         }
 
         public bool Delete(int id)
