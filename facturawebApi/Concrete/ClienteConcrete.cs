@@ -31,9 +31,30 @@ namespace facturawebApi.Concrete
             return false;
         }
 
-        public bool Delete(int id)
+        public bool Delete(int Id)
         {
-            throw new NotImplementedException();
+            var data = (from cliente in _context.Cliente
+                            where cliente.id_cli == Id
+                            select cliente).FirstOrDefault();
+
+            if (data != null)
+            {
+                _context.Cliente.Remove(data);
+                var result = _context.SaveChanges();
+
+                if (result > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public List<Cliente> GetAll()

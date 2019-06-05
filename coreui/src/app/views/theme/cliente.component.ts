@@ -1,3 +1,4 @@
+import {SelectionModel} from '@angular/cdk/collections';
 import { Component, OnInit, Inject, ViewChild, ElementRef,  ChangeDetectorRef} from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { getStyle, rgbToHex } from '@coreui/coreui/dist/js/coreui-utilities';
@@ -6,7 +7,7 @@ import { ClienteModel } from './cliente.Model';
 import { ClienteService } from './cliente.service';
 import { ModalDirective} from 'ngx-bootstrap/modal';
 import * as XLSX from 'xlsx';
-
+import { NgxUiLoaderService } from 'ngx-ui-loader'; // Import NgxUiLoaderService
 
 
 /**
@@ -27,27 +28,36 @@ export class ClienteComponent  implements OnInit {
   output: any;
   errorMessage: any;
   @ViewChild('TABLE') table: ElementRef;
-  displayedColumns: string[] = ['id_cli', 'cod_cli', 'nombre'];
+  displayedColumns: string[] = ['select','id_cli', 'cod_cli', 'nombre'];
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('infoModal') public infoModal: ModalDirective;
   dataSource: any;
+  selection = new SelectionModel<ClienteModel>(true, []);
 
+  constructor(@Inject(DOCUMENT) private _document: any, clienteService: ClienteService, 
+  private changeDetectorRefs: ChangeDetectorRef, private ngxService: NgxUiLoaderService) {
 
-  constructor(@Inject(DOCUMENT) private _document: any, clienteService: ClienteService, private changeDetectorRefs: ChangeDetectorRef) {
     this._clienteService = clienteService;
 
   }
   
   ngOnInit(): void {
+//    this.dataSource.sort = this.sort;
     this.genGrid();
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  search() {
+    alert('test');
+  }
+
+
   genGrid() 
   {
+    this.ngxService.start();
     this._clienteService.GetAll().subscribe(
         allcliente => {
             this.ClienteList = allcliente
@@ -55,6 +65,7 @@ export class ClienteComponent  implements OnInit {
             this.dataSource = new MatTableDataSource(this.ClienteList);
             this.dataSource.sort = this.sort;
             this.dataSource.paginator = this.paginator;
+            this.ngxService.stop(); 
           },
         error => this.errorMessage = <any>error
     );
@@ -81,19 +92,23 @@ export class ClienteComponent  implements OnInit {
   // On Submit
   onSubmit() {
     if (this.ClienteModel.id_cli != 0) {
+      this.ngxService.start();
       this._clienteService.Update(this.ClienteModel).subscribe(
         cliente => {
             console.log(cliente);
             this.refresh();
+            this.ngxService.stop();
           },
         error => this.errorMessage = <any>error
       );
   
     } else {
+      this.ngxService.start();
       this._clienteService.Add(this.ClienteModel).subscribe(
         cliente => {
             console.log(cliente);
             this.refresh();
+            this.ngxService.stop();
           },
         error => this.errorMessage = <any>error
       );  
@@ -127,6 +142,47 @@ export class ClienteComponent  implements OnInit {
     console.log(row);
     this.infoModal.show();
   }
+
+  eliminar() {
+    if (confirm('Confirma?')) {
+      let x = this.selection.selected;
+      this.ngxService.start();
+  
+      x.forEach(element => {
+        this._clienteService.Delete(element.id_cli).subscribe(
+          cliente => {
+              console.log(cliente);
+            },
+          error => this.errorMessage = <any>error
+        );
+        this.ngxService.stop();
+        this.genGrid();
+      });  
+    }
+  }
+
+
+    /** Whether the number of selected elements matches the total number of rows. */
+    isAllSelected() {
+      const numSelected = this.selection.selected.length;      
+      const numRows = this.dataSource.data.length;
+      return numSelected === numRows;
+    }
+  
+    /** Selects all rows if they are not all selected; otherwise clear selection. */
+    masterToggle() {
+      this.isAllSelected() ?
+          this.selection.clear() :
+          this.dataSource.data.forEach(row => this.selection.select(row));
+    }
+  
+    /** The label for the checkbox on the passed row */
+    checkboxLabel(row?: ClienteModel): string {
+      if (!row) {
+        return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+      }
+      return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id_cli + 1}`;
+    }
 }
 
 

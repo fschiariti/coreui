@@ -12,6 +12,8 @@ import { DemoMaterialModule} from '../../material-module';
 
 // Modal Component
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { NgxUiLoaderModule } from  'ngx-ui-loader';
+
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     ThemeRoutingModule,
     DemoMaterialModule,
     ModalModule.forRoot(),
-    FormsModule
+    FormsModule,
+    NgxUiLoaderModule
+
   ],
   declarations: [
     ClienteComponent,

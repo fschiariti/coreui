@@ -2,6 +2,8 @@ import { Component , OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginModel } from './Login.Model';
 import { LoginService } from './login.service';
+import { NgxUiLoaderService } from 'ngx-ui-loader'; // Import NgxUiLoaderService
+
 
 
 @Component({
@@ -25,7 +27,7 @@ export class LoginComponent implements OnInit
     autoHide: number = 2000;
 
 
-    constructor(private _Route: Router, loginservice: LoginService) 
+    constructor(private _Route: Router, loginservice: LoginService,  private ngxService: NgxUiLoaderService) 
     {
         this._loginservice = loginservice;
     }
@@ -34,6 +36,7 @@ export class LoginComponent implements OnInit
 
     onSubmit() 
     {
+        this.ngxService.start();
         this._loginservice.validateLoginUser(this.LoginModel).subscribe(
             response => 
             {     
@@ -43,11 +46,14 @@ export class LoginComponent implements OnInit
                 {
 
                   this._Route.navigate(['/dashboard']);
+                  this.ngxService.stop(); 
+
 
                 } else {
 
                   alert('usuario inválido');
                   this._Route.navigate(['/login']);
+                  this.ngxService.stop(); 
 
                 }
 

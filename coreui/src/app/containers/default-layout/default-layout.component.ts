@@ -24,6 +24,10 @@ export class DefaultLayoutComponent implements OnDestroy {
     });
   }
 
+ // search() {
+ //   alert('hola');
+ // }
+
   ngOnDestroy(): void {
     this.changes.disconnect();
   }

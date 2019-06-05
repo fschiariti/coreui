@@ -9,6 +9,7 @@ import { HttpClientModule} from "@angular/common/http";
 
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { DemoMaterialModule} from './material-module';
+import { NgxUiLoaderModule } from  'ngx-ui-loader';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -62,7 +63,8 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     ReactiveFormsModule,                        // <========== Add this line!
     BrowserAnimationsModule,    
     HttpClientModule,
-    DemoMaterialModule
+    DemoMaterialModule,
+    NgxUiLoaderModule
   ],
   declarations: [
     AppComponent,
