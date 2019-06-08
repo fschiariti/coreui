@@ -12,7 +12,7 @@ import { PaginationsComponent } from './paginations.component';
 import { PopoversComponent} from './popovers.component';
 import { ProgressComponent} from './progress.component';
 import { TooltipsComponent} from './tooltips.component';
-import { ClienteComponent } from '../theme/cliente.component';
+import { ClienteComponent } from '../archivos/cliente.component';
 
 const routes: Routes = [
   {

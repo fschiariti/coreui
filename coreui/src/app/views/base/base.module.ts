@@ -11,7 +11,7 @@ import { FormsComponent } from './forms.component';
 import { SwitchesComponent } from './switches.component';
 import { TablesComponent } from './tables.component';
 
-import { ClienteComponent } from '../theme/cliente.component';
+import { ClienteComponent } from '../archivos/cliente.component';
 
 
 // Tabs Component

@@ -30,16 +30,7 @@ export class LoginService {
 
                 if (data.Token != null)
                 {
-                    if (data.Usertype == "2") {
-                        // store username and jwt token in local storage to keep user logged in between page refreshes
-                        localStorage.setItem('currentUser', JSON.stringify({ username: loginmodel.Username, token: data.Token }));
-                    }
-                    else if (data.Usertype == "1") {
-                        // store username and jwt token in local storage to keep user logged in between page refreshes
-                        localStorage.setItem('AdminUser', JSON.stringify({ username: loginmodel.Username, token: data.Token }));
-                    } else {
-                        localStorage.setItem('AdminUser', JSON.stringify({ username: loginmodel.Username, token: data.Token }));
-                    }
+                    localStorage.setItem('AdminUser', JSON.stringify({ usuario: loginmodel.Usuario, token: data.Token }));
                     // return true to indicate successful login
                     return data;
                 } else {

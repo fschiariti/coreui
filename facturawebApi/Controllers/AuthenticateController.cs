@@ -22,10 +22,10 @@ namespace facturawebApi.Controllers
     public class AuthenticateController : ControllerBase
     {
         private readonly AppSettings _appSettings;
-        private readonly IUsers _users;
-        public AuthenticateController(IOptions<AppSettings> appSettings, IUsers users)
+        private readonly IUsuarios _usuarios;
+        public AuthenticateController(IOptions<AppSettings> appSettings, IUsuarios usuarios)
         {
-            _users = users;
+            _usuarios = usuarios;
             _appSettings = appSettings.Value;
         }
 
@@ -37,11 +37,11 @@ namespace facturawebApi.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var loginstatus = _users.AuthenticateUsers(value.UserName, EncryptionLibrary.EncryptText(value.Password));
+                    var loginstatus = _usuarios.Authenticate(value.Usuario, EncryptionLibrary.EncryptText(value.Password));
 
                     if (loginstatus)
                     {
-                        var userdetails = _users.GetUserDetailsbyCredentials(value.UserName);
+                        var userdetails = _usuarios.GetDetailsbyCredentials(value.Usuario);
 
                         if (userdetails != null)
                         {
@@ -52,7 +52,7 @@ namespace facturawebApi.Controllers
                             {
                                 Subject = new ClaimsIdentity(new Claim[]
                                 {
-                                        new Claim(ClaimTypes.Name, userdetails.UserId.ToString())
+                                        new Claim(ClaimTypes.Name, userdetails.Usuario.ToString())
                                 }),
                                 Expires = DateTime.UtcNow.AddDays(1),
                                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
@@ -63,7 +63,6 @@ namespace facturawebApi.Controllers
 
                             // remove password before returning
                             value.Password = null;
-                            value.Usertype = userdetails.RoleId;
 
                             return Ok(value);
 
@@ -71,16 +70,13 @@ namespace facturawebApi.Controllers
                         else
                         {
                             value.Password = null;
-                            value.Usertype = 0;
                             return Ok(value);
                         }
                     }
                     value.Password = null;
-                    value.Usertype = 0;
                     return Ok(value);
                 }
                 value.Password = null;
-                value.Usertype = 0;
                 return Ok(value);
             }
             catch (Exception)

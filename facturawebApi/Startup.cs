@@ -80,7 +80,7 @@ namespace facturawebApi
 
 
             services.AddSingleton<IConfiguration>(Configuration);
-             services.AddTransient<IUsers, UsersConcrete>();
+            services.AddTransient<IUsuarios, UsuariosConcrete>();
             services.AddTransient<ICliente, ClienteConcrete>();
 
             //services.AddScoped<IUrlHelper>(implementationFactory =>
