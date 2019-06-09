@@ -47,5 +47,10 @@ export const navItems: NavData[] = [
     name: 'Clientes',
     url: '/archivos/cliente',
     icon: 'icon-drop'
+  },
+  {
+    name: 'Abonos',
+    url: '/archivos/cliabon',
+    icon: 'icon-drop'
   }
 ];

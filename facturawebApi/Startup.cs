@@ -82,11 +82,14 @@ namespace facturawebApi
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddTransient<IUsuarios, UsuariosConcrete>();
             services.AddTransient<ICliente, ClienteConcrete>();
+            services.AddTransient<ICliAbon, CliAbonConcrete>();
+            services.AddTransient<IProducto, ProductoConcrete>();
+
 
             //services.AddScoped<IUrlHelper>(implementationFactory =>
             //{
-                //var actionContext = implementationFactory.GetService<IActionContextAccessor>().ActionContext;
-                //return new UrlHelper(actionContext);
+            //var actionContext = implementationFactory.GetService<IActionContextAccessor>().ActionContext;
+            //return new UrlHelper(actionContext);
             //});
             #endregion
 

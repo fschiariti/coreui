@@ -1,0 +1,87 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\SistPruebas\\facturawebAPI\\facturawebApi\\facturawebApi.csproj": {}
+  },
+  "projects": {
+    "C:\\SistPruebas\\facturawebAPI\\facturawebApi\\facturawebApi.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\SistPruebas\\facturawebAPI\\facturawebApi\\facturawebApi.csproj",
+        "projectName": "facturawebApi",
+        "projectPath": "C:\\SistPruebas\\facturawebAPI\\facturawebApi\\facturawebApi.csproj",
+        "packagesPath": "C:\\Users\\SCHIARITI\\.nuget\\packages\\",
+        "outputPath": "C:\\SistPruebas\\facturawebAPI\\facturawebApi\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\SCHIARITI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "App.Helper.Dapper": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[8.1.0, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[6.1.0, )"
+            },
+            "Microsoft.AspNetCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.1, )",
+              "autoReferenced": true
+            },
+            "Microsoft.AspNetCore.Razor.Design": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.2, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[4.0.1, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}

@@ -42,7 +42,6 @@ namespace facturawebApi.Controllers
         }
 
         // GET: api/Cliente/5
-//        [HttpGet("{id}", Name = "GetCliente")]
         [HttpGet("{id}")]
         public Cliente Get(int id)
         {

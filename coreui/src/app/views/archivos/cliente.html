@@ -1,0 +1,120 @@
+<div class="breadcrumb">
+  <li class="breadcrumb-menu">
+    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
+      </mat-form-field>
+      <button class="btn" (click)="nuevo()"><i class="fa fa-file-word-o"></i> &nbsp;Nuevo</button>
+      <button class="btn" (click)="eliminar()"><i class="fa fa-trash-o"></i> &nbsp;Eliminar</button>
+      <button class="btn" (click)="ExportTOExcel()"><i class="fa fa-file-excel-o"></i> &nbsp;Excel</button>
+    </div>
+  </li>
+</div>
+<div class="card-body">
+
+  <div class="mat-elevation-z8" #TABLE>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" #table class="mat-elevation-z8 table table-bordered table-striped table-sm">
+
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                        [aria-label]="checkboxLabel()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)"
+                        [aria-label]="checkboxLabel(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- id Column -->
+
+      <ng-container matColumnDef="id_cli">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Id. </th>
+        <td mat-cell *matCellDef="let element"> {{element.id_cli}} </td>
+      </ng-container>
+
+      <!-- codigo Column -->
+      <ng-container matColumnDef="cod_cli">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cod. </th>
+        <td mat-cell *matCellDef="let element"> {{element.cod_cli}} </td>
+      </ng-container>
+
+      <!-- nombre Column -->
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+      </ng-container>
+
+      <!-- nro_doc Column -->
+      <ng-container matColumnDef="nro_doc">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Documento </th>
+        <td mat-cell *matCellDef="let element"> {{element.nro_doc}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></tr>
+    </table>
+    <mat-paginator [pageSize]="20" [pageSizeOptions]="[20, 50, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>
+
+<div bsModal #infoModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info" role="document">
+    <form #f="ngForm" novalidate (ngSubmit)="onSubmit()">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Editando</h4>
+          <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="id_cli">Id</label>
+                  <input type="text" class="form-control" name="id_cli" id="id_cli" [(ngModel)]="ClienteModel.id_cli" >
+                </div>
+              </div>
+            </div><!--/.row-->
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="cod_cli">Codigo</label>
+                  <input type="text" class="form-control" name="cod_cli" id="cod_cli" [(ngModel)]="ClienteModel.cod_cli" >
+                </div>
+              </div>
+            </div><!--/.row-->
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="nombre">Nombre</label>
+                  <input type="text" class="form-control" name="nombre" id="nombre" [(ngModel)]="ClienteModel.nombre" >
+                </div>
+              </div>
+            </div><!--/.row-->
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info">Guardar</button>
+          <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Cancelar</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </form>
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<ngx-ui-loader></ngx-ui-loader>
+
+
+<!-- Copyright 2019 Google Inc. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->

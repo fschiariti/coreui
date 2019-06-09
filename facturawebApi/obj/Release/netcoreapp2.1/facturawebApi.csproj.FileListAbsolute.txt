@@ -1,0 +1,14 @@
+C:\SistPruebas\facturawebAPI\facturawebApi\bin\Release\netcoreapp2.1\facturawebApi.deps.json
+C:\SistPruebas\facturawebAPI\facturawebApi\bin\Release\netcoreapp2.1\facturawebApi.runtimeconfig.json
+C:\SistPruebas\facturawebAPI\facturawebApi\bin\Release\netcoreapp2.1\facturawebApi.runtimeconfig.dev.json
+C:\SistPruebas\facturawebAPI\facturawebApi\bin\Release\netcoreapp2.1\facturawebApi.dll
+C:\SistPruebas\facturawebAPI\facturawebApi\bin\Release\netcoreapp2.1\facturawebApi.pdb
+C:\SistPruebas\facturawebAPI\facturawebApi\obj\Release\netcoreapp2.1\facturawebApi.csprojAssemblyReference.cache
+C:\SistPruebas\facturawebAPI\facturawebApi\obj\Release\netcoreapp2.1\facturawebApi.csproj.CoreCompileInputs.cache
+C:\SistPruebas\facturawebAPI\facturawebApi\obj\Release\netcoreapp2.1\facturawebApi.RazorAssemblyInfo.cache
+C:\SistPruebas\facturawebAPI\facturawebApi\obj\Release\netcoreapp2.1\facturawebApi.RazorAssemblyInfo.cs
+C:\SistPruebas\facturawebAPI\facturawebApi\obj\Release\netcoreapp2.1\facturawebApi.AssemblyInfoInputs.cache
+C:\SistPruebas\facturawebAPI\facturawebApi\obj\Release\netcoreapp2.1\facturawebApi.AssemblyInfo.cs
+C:\SistPruebas\facturawebAPI\facturawebApi\obj\Release\netcoreapp2.1\facturawebApi.RazorTargetAssemblyInfo.cache
+C:\SistPruebas\facturawebAPI\facturawebApi\obj\Release\netcoreapp2.1\facturawebApi.dll
+C:\SistPruebas\facturawebAPI\facturawebApi\obj\Release\netcoreapp2.1\facturawebApi.pdb

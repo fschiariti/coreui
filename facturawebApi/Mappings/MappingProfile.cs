@@ -26,6 +26,14 @@ namespace facturawebApi.Mappings
                 .ForMember(dest => dest.nombre, opt => opt.MapFrom(src => src.nombre))
                 .ForMember(dest => dest.nro_doc, opt => opt.MapFrom(src => src.nro_doc));
 
+            CreateMap<CliAbonViewModel, CliAbon>()
+                .ForMember(dest => dest.id_abon, opt => opt.MapFrom(src => src.id_abon))
+                .ForMember(dest => dest.id_cli, opt => opt.MapFrom(src => src.id_cli))
+                .ForMember(dest => dest.id_prod, opt => opt.MapFrom(src => src.id_prod))
+                .ForMember(dest => dest.cantidad, opt => opt.MapFrom(src => src.cantidad))
+                .ForMember(dest => dest.precio, opt => opt.MapFrom(src => src.precio))
+                .ForMember(dest => dest.iobserv, opt => opt.MapFrom(src => src.iobserv));
+
         }
     }
 }
