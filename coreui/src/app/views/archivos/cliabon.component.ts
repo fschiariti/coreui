@@ -5,6 +5,11 @@ import { getStyle, rgbToHex } from '@coreui/coreui/dist/js/coreui-utilities';
 import { MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
 import { CliAbonModel } from './cliabon.Model';
 import { CliAbonService } from './cliabon.service';
+import { ProductoModel } from './producto.Model';
+import { ProductoService } from './producto.service';
+import { ClienteModel } from './cliente.Model';
+import { ClienteService } from './cliente.service';
+
 import { ModalDirective} from 'ngx-bootstrap/modal';
 import * as XLSX from 'xlsx';
 import { NgxUiLoaderService } from 'ngx-ui-loader'; // Import NgxUiLoaderService
@@ -22,13 +27,20 @@ import { NgxUiLoaderService } from 'ngx-ui-loader'; // Import NgxUiLoaderService
 export class CliAbonComponent  implements OnInit {
 
   private _cliabonService;
+  private _productoService;
+  private _clienteService;
   rowInfo: any;
   CliAbonList: CliAbonModel[];
   CliAbonModel: CliAbonModel= new CliAbonModel();
+  ProductoList: ProductoModel[];
+  ProductoModel: ProductoModel= new ProductoModel();
+  ClienteList: ClienteModel[];
+  ClienteModel: ClienteModel= new ClienteModel();
+
   output: any;
   errorMessage: any;
   @ViewChild('TABLE') table: ElementRef;
-  displayedColumns: string[] = ['select','id_cli', 'cod_cli', 'nombre'];
+  displayedColumns: string[] = ['select','id_abon', 'id_cli', 'cod_cli', 'nombre', 'id_prod', 'descrip', 'cantidad', 'precio', 'observ'];
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('infoModal') public infoModal: ModalDirective;
@@ -36,13 +48,20 @@ export class CliAbonComponent  implements OnInit {
   selection = new SelectionModel<CliAbonModel>(true, []);
 
   constructor(@Inject(DOCUMENT) private _document: any, CliAbonService: CliAbonService, 
+  ProductoService: ProductoService, ClienteService: ClienteService, 
   private changeDetectorRefs: ChangeDetectorRef, private ngxService: NgxUiLoaderService) {
 
     this._cliabonService = CliAbonService;
+    this._productoService = ProductoService;
+    this._clienteService = ClienteService;
     this.CliAbonList = [];
+    this.ProductoList = [];
+    this.ClienteList = [];
   }
   
   ngOnInit(): void {
+    this.getCliente();
+    this.getProducto();
     this.genGrid();
   }
   applyFilter(filterValue: string) {
@@ -53,12 +72,47 @@ export class CliAbonComponent  implements OnInit {
     alert('test');
   }
 
+  getCliente() 
+  {
+    this.ngxService.start();
+    this._clienteService.GetAll().subscribe(
+        allcli => {
+            this.ClienteList = allcli
+            console.log(this.ClienteList);
+            this.ngxService.stop(); 
+          },
+        error => this.errorMessage = <any>error
+    );
+  }
+
+  getProducto() 
+  {
+    this.ngxService.start();
+    this._productoService.GetAll().subscribe(
+        allprod => {
+            this.ProductoList = allprod
+            console.log(this.ProductoList);
+            this.ngxService.stop(); 
+          },
+        error => this.errorMessage = <any>error
+    );
+
+  }
 
   genGrid() 
   {
-      this.dataSource = new MatTableDataSource(this.CliAbonList);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
+    this.ngxService.start();
+    this._cliabonService.GetAll().subscribe(
+        allcliente => {
+            this.CliAbonList = allcliente
+            console.log(this.CliAbonList);
+            this.dataSource = new MatTableDataSource(this.CliAbonList);
+            this.dataSource.sort = this.sort;
+            this.dataSource.paginator = this.paginator;
+            this.ngxService.stop(); 
+          },
+        error => this.errorMessage = <any>error
+    );
 
   }
 

@@ -61,6 +61,8 @@ namespace facturawebApi.Concrete
             IQueryable<CliAbonViewModel> result = (from cliabon in _context.CliAbon
                           join cliente in _context.Cliente on 
                           cliabon.id_cli equals cliente.id_cli
+                          join producto in _context.Producto on
+                          cliabon.id_prod equals producto.id_prod
                           select new CliAbonViewModel
                           {
                               id_abon = cliabon.id_abon,
@@ -68,7 +70,10 @@ namespace facturawebApi.Concrete
                               cod_cli = cliente.cod_cli,
                               nombre = cliente.nombre,
                               id_prod = cliabon.id_prod,
-                              descrip = ""
+                              descrip = producto.descrip,
+                              cantidad = cliabon.cantidad,
+                              precio = cliabon.precio,
+                              iobserv = cliabon.iobserv
                           }).AsQueryable().OrderByDescending(x => x.id_abon);
 
             return result;

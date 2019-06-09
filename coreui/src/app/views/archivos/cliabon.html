@@ -40,6 +40,13 @@
 
       <!-- id Column -->
 
+      <ng-container matColumnDef="id_abon">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Id. </th>
+        <td mat-cell *matCellDef="let element"> {{element.id_abon}} </td>
+      </ng-container>
+
+      <!-- id Column -->
+
       <ng-container matColumnDef="id_cli">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Id. </th>
         <td mat-cell *matCellDef="let element"> {{element.id_cli}} </td>
@@ -57,8 +64,37 @@
         <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
       </ng-container>
 
+      <!-- nombre Column -->
+      <ng-container matColumnDef="id_prod">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Producto </th>
+        <td mat-cell *matCellDef="let element"> {{element.id_prod}} </td>
+      </ng-container>
 
+      <!-- nombre Column -->
+      <ng-container matColumnDef="descrip">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Descrip </th>
+        <td mat-cell *matCellDef="let element"> {{element.descrip}} </td>
+      </ng-container>
+      
+      <!-- nombre Column -->
+      <ng-container matColumnDef="cantidad">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad </th>
+        <td mat-cell *matCellDef="let element"> {{element.cantidad}} </td>
+      </ng-container>
 
+      <!-- nombre Column -->
+      <ng-container matColumnDef="precio">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio </th>
+        <td mat-cell *matCellDef="let element"> {{element.precio}} </td>
+      </ng-container>
+
+      <!-- nombre Column -->
+      <ng-container matColumnDef="observ">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Observ</th>
+        <td mat-cell *matCellDef="let element"> {{element.iobserv}} </td>
+      </ng-container>
+      
+            
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></tr>
     </table>
@@ -77,30 +113,61 @@
           </button>
         </div>
         <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="id_cli">Cliente</label>
+                <select required name="id_cli" #refmonth="ngModel" class="form-control" [(ngModel)]="CliAbonModel.id_cli">
+                  <option value=''>-Seleccione Cliente-</option>
+                  <option *ngFor="let cli of ClienteList" [ngValue]="cli.id_cli">
+                    {{cli.nombre}}
+                  </option>
+                </select>            
+              </div>
+            </div>
+          </div><!--/.row-->            
+
+          <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="id_prod">Producto</label>
+                  <select required name="id_prod" #refmonth="ngModel" class="form-control" [(ngModel)]="CliAbonModel.id_prod">
+                    <option value=''>-Seleccione Producto-</option>
+                    <option *ngFor="let prod of ProductoList" [ngValue]="prod.id_prod">
+                      {{prod.descrip}}
+                    </option>
+                  </select>            
+                </div>
+              </div>
+            </div><!--/.row-->            
+
             <div class="row">
               <div class="col-sm-12">
                 <div class="form-group">
-                  <label for="id_cli">Id</label>
-                  <input type="text" class="form-control" name="id_cli" id="id_cli" [(ngModel)]="CliAbonModel.id_cli" >
+                  <label for="cantidad">Cantidad</label>
+                  <input type="text" class="form-control" name="cantidad" id="cantidad" [(ngModel)]="ClienteModel.cantidad" >
                 </div>
               </div>
             </div><!--/.row-->
+
             <div class="row">
               <div class="col-sm-12">
                 <div class="form-group">
-                  <label for="cod_cli">Codigo</label>
-                  <input type="text" class="form-control" name="cod_cli" id="cod_cli" [(ngModel)]="CliAbonModel.cod_cli" >
+                  <label for="precio">Precio</label>
+                  <input type="text" class="form-control" name="precio" id="precio" [(ngModel)]="ClienteModel.precio" >
                 </div>
               </div>
             </div><!--/.row-->
+
             <div class="row">
               <div class="col-sm-12">
                 <div class="form-group">
-                  <label for="nombre">Nombre</label>
-                  <input type="text" class="form-control" name="nombre" id="nombre" [(ngModel)]="CliAbonModel.nombre" >
+                  <label for="iobserv">Observacion</label>
+                  <input type="text" class="form-control" name="iobserv" id="iobserv" [(ngModel)]="ClienteModel.iobserv" >
                 </div>
               </div>
             </div><!--/.row-->
+
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-info">Guardar</button>

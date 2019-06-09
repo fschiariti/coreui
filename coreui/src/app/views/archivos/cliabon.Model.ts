@@ -6,6 +6,8 @@ export class CliAbonModel
     public nombre: string = "";
     public id_prod: number = 0 ;
     public descrip: string = "";
+    public cantidad: number = 0;
+    public precio: number = 0;
     public iobserv: string = "";
     public id_empre: number = 0;
 

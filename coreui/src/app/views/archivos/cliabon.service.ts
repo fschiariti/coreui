@@ -34,8 +34,8 @@ export class CliAbonService {
     }
 
     // Get All Role By ID
-    public GetById(id_cli) {
-        var editUrl = this.apiUrl + id_cli;
+    public GetById(id_abon) {
+        var editUrl = this.apiUrl + id_abon;
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
         return this.http.get<CliAbonModel>(editUrl,{ headers: headers }).pipe(tap(data =>  data),
@@ -46,7 +46,7 @@ export class CliAbonService {
 
     // Update Role
     public Update(clientemodel: CliAbonModel) {
-        var putUrl = this.apiUrl + '/' + clientemodel.id_cli;
+        var putUrl = this.apiUrl + '/' + clientemodel.id_abon;
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
         return this.http.put<any>(putUrl, clientemodel, { headers: headers })
@@ -66,8 +66,8 @@ export class CliAbonService {
     }
 
     // Delete
-    public Delete(id_cli) {
-        var deleteUrl = this.apiUrl + '/' + id_cli;
+    public Delete(id_abon) {
+        var deleteUrl = this.apiUrl + '/' + id_abon;
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
         return this.http.delete<any>(deleteUrl, { headers: headers })
