@@ -41,7 +41,7 @@ namespace facturawebApi.Controllers
             }
         }
 
-        // GET: api/Cliente/5
+        // GET: api/CliAbon/5
         [HttpGet("{id}")]
         public CliAbonViewModel Get(int id)
         {
@@ -106,11 +106,11 @@ namespace facturawebApi.Controllers
             }
         }
 
-        // PUT: api/Cliente/5
+        // PUT: api/CliAbon/5
         [HttpPut("{id}")]
         public HttpResponseMessage Put(int id, [FromBody] CliAbonViewModel cliAbonViewModel)
         {
-            //            try
+            try
             {
                 var temp = AutoMapper.Mapper.Map<CliAbon>(cliAbonViewModel);
                 _cliabon.Update(temp);
@@ -122,6 +122,11 @@ namespace facturawebApi.Controllers
 
                 return response;
             }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
 
         // DELETE: api/CliAbon/5

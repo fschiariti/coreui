@@ -24,7 +24,7 @@ export class CliAbonService {
     }
 
 
-    // Get All Role
+    // Get All 
     public GetAll() {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
@@ -33,7 +33,7 @@ export class CliAbonService {
         );
     }
 
-    // Get All Role By ID
+    // Get  By ID
     public GetById(id_abon) {
         var editUrl = this.apiUrl + id_abon;
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -44,7 +44,7 @@ export class CliAbonService {
     }
 
 
-    // Update Role
+    // Update
     public Update(clientemodel: CliAbonModel) {
         var putUrl = this.apiUrl + '/' + clientemodel.id_abon;
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -55,7 +55,7 @@ export class CliAbonService {
             );
     }
 
-    // Add Role
+    // Add 
     public Add(clienteModel: CliAbonModel) {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);

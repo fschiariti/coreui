@@ -40,7 +40,7 @@ export class CliAbonComponent  implements OnInit {
   output: any;
   errorMessage: any;
   @ViewChild('TABLE') table: ElementRef;
-  displayedColumns: string[] = ['select','id_abon', 'id_cli', 'cod_cli', 'nombre', 'id_prod', 'descrip', 'cantidad', 'precio', 'observ'];
+  displayedColumns: string[] = ['select','cod_cli', 'nombre', 'cod_prod', 'descrip', 'cantidad', 'precio', 'observ'];
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('infoModal') public infoModal: ModalDirective;
@@ -116,6 +116,15 @@ export class CliAbonComponent  implements OnInit {
 
   }
 
+
+  nuevoProducto() {
+    
+  }
+
+  nuevoCliente() {
+
+  }
+
   ExportTOExcel() 
   {
       const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
@@ -126,36 +135,61 @@ export class CliAbonComponent  implements OnInit {
   }
 
   nuevo() {
-   // this.CliAbonModel.id_cli = 0;
-   // this.CliAbonModel.cod_cli = "";
-   // this.CliAbonModel.nombre = "";
-    this.infoModal.show();
+   this.CliAbonModel.id_abon = 0;
+   this.CliAbonModel.id_cli = 0;
+   this.CliAbonModel.id_prod = 0;
+   this.CliAbonModel.iobserv = "";
+   this.CliAbonModel.cantidad = 0;
+   this.CliAbonModel.precio = 0;
+   this.infoModal.show();
 
   }
 
   // On Submit
   onSubmit() {
-    if (this.CliAbonModel.id_cli != 0) {
-
-//      let x = this.CliAbonList;
-  //    x.push(this.CliAbonModel);
-
-      this.CliAbonList.push(this.CliAbonModel);
-      this.refresh();
+    if (this.CliAbonModel.id_abon != 0) {
+      this.ngxService.start();
+      this._cliabonService.Update(this.CliAbonModel).subscribe(
+        cliabon => {
+            console.log(cliabon);
+            this.refresh();
+            this.ngxService.stop();
+          },
+        error => this.errorMessage = <any>error
+      );
+  
+    } else {
+      this.ngxService.start();
+      this._cliabonService.Add(this.CliAbonModel).subscribe(
+        cliabon => {
+            console.log(cliabon);
+            this.refresh();
+            this.ngxService.stop();
+          },
+        error => this.errorMessage = <any>error
+      );  
     }
+    console.log(this.CliAbonModel);
     this.infoModal.hide();
+    //this.genGrid();
+
   }
+
+
 
   refresh() {
     this.genGrid();
   }
 
   selectRow(row) {
-    this._cliabonService.GetById(row.id_cli).subscribe(
+    this._cliabonService.GetById(row.id_abon).subscribe(
       CliAbon => {
+          this.CliAbonModel.id_abon = CliAbon.id_abon;
           this.CliAbonModel.id_cli = CliAbon.id_cli;
-          this.CliAbonModel.cod_cli = CliAbon.cod_cli;
-          this.CliAbonModel.nombre = CliAbon.nombre;
+          this.CliAbonModel.id_prod = CliAbon.id_prod;
+          this.CliAbonModel.cantidad = CliAbon.cantidad;
+          this.CliAbonModel.precio = CliAbon.precio;
+          this.CliAbonModel.iobserv = CliAbon.iobserv;
           console.log(this.CliAbonModel);
         },
       error => this.errorMessage = <any>error
@@ -171,7 +205,7 @@ export class CliAbonComponent  implements OnInit {
       this.ngxService.start();
   
       x.forEach(element => {
-        this._cliabonService.Delete(element.id_cli).subscribe(
+        this._cliabonService.Delete(element.id_abon).subscribe(
           CliAbon => {
               console.log(CliAbon);
             },
@@ -208,8 +242,6 @@ export class CliAbonComponent  implements OnInit {
       if (!row) {
         return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
       }
-      return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id_cli + 1}`;
+      return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id_abon + 1}`;
     }
 }
-
-

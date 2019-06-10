@@ -12,6 +12,7 @@ namespace facturawebApi.ViewModel
         public string cod_cli { get; set; }
         public string nombre { get; set; }
         public int id_prod { get; set; }
+        public string cod_prod { get; set; }
         public string descrip { get; set; }
         public decimal cantidad { get; set; }
         public decimal precio { get; set; }

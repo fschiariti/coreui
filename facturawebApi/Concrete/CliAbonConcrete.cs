@@ -70,6 +70,7 @@ namespace facturawebApi.Concrete
                               cod_cli = cliente.cod_cli,
                               nombre = cliente.nombre,
                               id_prod = cliabon.id_prod,
+                              cod_prod = producto.cod_prod,
                               descrip = producto.descrip,
                               cantidad = cliabon.cantidad,
                               precio = cliabon.precio,
@@ -85,6 +86,8 @@ namespace facturawebApi.Concrete
             var result = (from cliabon in _context.CliAbon
                       join cliente in _context.Cliente on
                       cliabon.id_cli equals cliente.id_cli
+                      join producto in _context.Producto on
+                      cliabon.id_prod equals producto.id_prod
                       where cliabon.id_abon == id
                       select new CliAbonViewModel
                       {
@@ -93,7 +96,11 @@ namespace facturawebApi.Concrete
                           cod_cli = cliente.cod_cli,
                           nombre = cliente.nombre,
                           id_prod = cliabon.id_prod,
-                          descrip = ""
+                          cod_prod = producto.cod_prod,
+                          descrip = producto.descrip,
+                          cantidad = cliabon.cantidad,
+                          precio = cliabon.precio,
+                          iobserv = cliabon.iobserv
                       }).FirstOrDefault();
 
 
@@ -111,6 +118,11 @@ namespace facturawebApi.Concrete
         public bool Update(CliAbon CliAbon)
         {
             _context.Entry(CliAbon).Property(x => x.id_prod).IsModified = true;
+            _context.Entry(CliAbon).Property(x => x.id_cli).IsModified = true;
+            _context.Entry(CliAbon).Property(x => x.cantidad).IsModified = true;
+            _context.Entry(CliAbon).Property(x => x.precio).IsModified = true;
+            _context.Entry(CliAbon).Property(x => x.iobserv).IsModified = true;
+
             var result = _context.SaveChanges();
             if (result > 0)
             {

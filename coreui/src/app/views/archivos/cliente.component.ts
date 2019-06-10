@@ -28,7 +28,7 @@ export class ClienteComponent  implements OnInit {
   output: any;
   errorMessage: any;
   @ViewChild('TABLE') table: ElementRef;
-  displayedColumns: string[] = ['select','id_cli', 'cod_cli', 'nombre', 'nro_doc'];
+  displayedColumns: string[] = ['select','cod_cli', 'nombre', 'nro_doc'];
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('infoModal') public infoModal: ModalDirective;

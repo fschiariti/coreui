@@ -4,9 +4,9 @@
       <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
       </mat-form-field>
-      <button class="btn" (click)="nuevo()"><i class="fa fa-file-word-o"></i> &nbsp;Nuevo Abono</button>
-      <button class="btn" (click)="nuevoCliente()"><i class="fa fa-file-word-o"></i> &nbsp;Nuevo Cliente</button>
-      <button class="btn" (click)="nuevoProducto()"><i class="fa fa-file-word-o"></i> &nbsp;Nuevo Producto</button>
+      <button class="btn" (click)="nuevo()"><i class="fa fa-file"></i> &nbsp;Nuevo Abono</button>
+      <button class="btn" (click)="nuevoCliente()"><i class="fa fa-file"></i> &nbsp;Nuevo Cliente</button>
+      <button class="btn" (click)="nuevoProducto()"><i class="fa fa-file"></i> &nbsp;Nuevo Producto</button>
       <button class="btn" (click)="eliminar()"><i class="fa fa-trash-o"></i> &nbsp;Eliminar</button>
       <button class="btn" (click)="ExportTOExcel()"><i class="fa fa-file-excel-o"></i> &nbsp;Excel</button>
     </div>
@@ -38,20 +38,6 @@
       <!--- Note that these columns can be defined in any order.
             The actual rendered columns are set as a property on the row definition" -->
 
-      <!-- id Column -->
-
-      <ng-container matColumnDef="id_abon">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Id. </th>
-        <td mat-cell *matCellDef="let element"> {{element.id_abon}} </td>
-      </ng-container>
-
-      <!-- id Column -->
-
-      <ng-container matColumnDef="id_cli">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Id. </th>
-        <td mat-cell *matCellDef="let element"> {{element.id_cli}} </td>
-      </ng-container>
-
       <!-- codigo Column -->
       <ng-container matColumnDef="cod_cli">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Cod. </th>
@@ -64,16 +50,17 @@
         <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
       </ng-container>
 
-      <!-- nombre Column -->
-      <ng-container matColumnDef="id_prod">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Producto </th>
-        <td mat-cell *matCellDef="let element"> {{element.id_prod}} </td>
+      <!-- cod_prod Column -->
+      <ng-container matColumnDef="cod_prod">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cod. Prod. </th>
+        <td mat-cell *matCellDef="let element"> {{element.cod_prod}} </td>
       </ng-container>
+      
 
       <!-- nombre Column -->
       <ng-container matColumnDef="descrip">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Descrip </th>
         <td mat-cell *matCellDef="let element"> {{element.descrip}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
       </ng-container>
       
       <!-- nombre Column -->
@@ -90,8 +77,8 @@
 
       <!-- nombre Column -->
       <ng-container matColumnDef="observ">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Observ</th>
         <td mat-cell *matCellDef="let element"> {{element.iobserv}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Observación</th>
       </ng-container>
       
             
@@ -145,7 +132,7 @@
               <div class="col-sm-12">
                 <div class="form-group">
                   <label for="cantidad">Cantidad</label>
-                  <input type="text" class="form-control" name="cantidad" id="cantidad" [(ngModel)]="ClienteModel.cantidad" >
+                  <input type="text" class="form-control" name="cantidad" id="cantidad" [(ngModel)]="CliAbonModel.cantidad" >
                 </div>
               </div>
             </div><!--/.row-->
@@ -154,7 +141,7 @@
               <div class="col-sm-12">
                 <div class="form-group">
                   <label for="precio">Precio</label>
-                  <input type="text" class="form-control" name="precio" id="precio" [(ngModel)]="ClienteModel.precio" >
+                  <input type="text" class="form-control" name="precio" id="precio" [(ngModel)]="CliAbonModel.precio" >
                 </div>
               </div>
             </div><!--/.row-->
@@ -163,7 +150,7 @@
               <div class="col-sm-12">
                 <div class="form-group">
                   <label for="iobserv">Observacion</label>
-                  <input type="text" class="form-control" name="iobserv" id="iobserv" [(ngModel)]="ClienteModel.iobserv" >
+                  <input type="text" class="form-control" name="iobserv" id="iobserv" [(ngModel)]="CliAbonModel.iobserv" >
                 </div>
               </div>
             </div><!--/.row-->

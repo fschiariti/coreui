@@ -4,7 +4,7 @@
       <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
       </mat-form-field>
-      <button class="btn" (click)="nuevo()"><i class="fa fa-file-word-o"></i> &nbsp;Nuevo</button>
+      <button class="btn" (click)="nuevo()"><i class="fa fa-file"></i> &nbsp;Nuevo</button>
       <button class="btn" (click)="eliminar()"><i class="fa fa-trash-o"></i> &nbsp;Eliminar</button>
       <button class="btn" (click)="ExportTOExcel()"><i class="fa fa-file-excel-o"></i> &nbsp;Excel</button>
     </div>
@@ -36,12 +36,6 @@
       <!--- Note that these columns can be defined in any order.
             The actual rendered columns are set as a property on the row definition" -->
 
-      <!-- id Column -->
-
-      <ng-container matColumnDef="id_cli">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Id. </th>
-        <td mat-cell *matCellDef="let element"> {{element.id_cli}} </td>
-      </ng-container>
 
       <!-- codigo Column -->
       <ng-container matColumnDef="cod_cli">

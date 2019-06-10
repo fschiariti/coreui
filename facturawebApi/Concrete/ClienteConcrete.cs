@@ -60,7 +60,7 @@ namespace facturawebApi.Concrete
         public List<Cliente> GetAll()
         {
             var result = (from Cliente in _context.Cliente
-                          select Cliente).ToList();
+                          select Cliente).Take(50).ToList();
 
             return result;
         }
