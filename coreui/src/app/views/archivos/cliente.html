@@ -64,48 +64,71 @@
 
 <div bsModal #infoModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-info" role="document">
-    <form #f="ngForm" novalidate (ngSubmit)="onSubmit()">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Editando</h4>
-          <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="form-group">
-                  <label for="id_cli">Id</label>
-                  <input type="text" class="form-control" name="id_cli" id="id_cli" [(ngModel)]="ClienteModel.id_cli" >
+    <div>
+<!--  <form #f="ngForm"  novalidate (ngSubmit)="onSubmit()" class="needs-validation">-->
+      <form [formGroup]="simpleForm" novalidate (ngSubmit)="onSubmit()" class="needs-validation">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Editando</h4>
+              <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <!--
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label for="id_cli">Id</label>
+                      <input type="text" class="form-control" name="id_cli" id="id_cli" [(ngModel)]="ClienteModel.id_cli" >
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div><!--/.row-->
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="form-group">
-                  <label for="cod_cli">Codigo</label>
-                  <input type="text" class="form-control" name="cod_cli" id="cod_cli" [(ngModel)]="ClienteModel.cod_cli" >
-                </div>
-              </div>
-            </div><!--/.row-->
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="form-group">
-                  <label for="nombre">Nombre</label>
-                  <input type="text" class="form-control" name="nombre" id="nombre" [(ngModel)]="ClienteModel.nombre" >
-                </div>
-              </div>
-            </div><!--/.row-->
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-info">Guardar</button>
-          <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Cancelar</button>
-        </div>
-      </div><!-- /.modal-content -->
-    </form>
+                -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label for="cod_cli">Codigo</label>
+                      <input type="text" class="form-control" name="cod_cli" id="cod_cli" [(ngModel)]="ClienteModel.cod_cli"  
+                      placeholder="Codigo de cliente"
+                      formControlName="cod_cli"
+                      required
+                      autofocus
+                      [ngClass]="{ 'is-invalid': submitted && f.cod_cli.errors, 'is-valid': f.nombre.touched && !f.cod_cli.errors }" />
+                      <div *ngIf="submitted && f['cod_cli'].errors" class="invalid-feedback">
+                        <div *ngIf="f['cod_cli'].trim().errors.required">Ingrese nombre</div>
+                      </div>
+                    </div>
+                  </div>
+                </div><!--/.row-->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label for="nombre">Nombre</label>
+                      <input type="text" class="form-control" name="nombre" id="nombre" [(ngModel)]="ClienteModel.nombre" 
+                              placeholder="nombre"
+                              formControlName="nombre"
+                              required
+                              autofocus
+                              [ngClass]="{ 'is-invalid': submitted && f.nombre.errors, 'is-valid': f.nombre.touched && !f.nombre.errors }" />
+                      <div *ngIf="submitted && f['nombre'].errors" class="invalid-feedback">
+                        <div *ngIf="f['nombre'].trim().errors.required">Ingrese nombre</div>
+                      </div>
+                    </div>
+                  </div>
+                </div><!--/.row-->
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-info">Guardar</button>
+              <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Cancelar</button>
+            </div>
+          </div><!-- /.modal-content -->
+      </form>
+    </div>
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
 <ngx-ui-loader></ngx-ui-loader>
 
 

@@ -1,7 +1,6 @@
-import {SelectionModel} from '@angular/cdk/collections';
-import { Component, OnInit, Inject, ViewChild, ElementRef,  ChangeDetectorRef} from '@angular/core';
+import { SelectionModel} from '@angular/cdk/collections';
+import { Component, OnInit, Inject, ViewChild, Input, ElementRef,  ChangeDetectorRef} from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { getStyle, rgbToHex } from '@coreui/coreui/dist/js/coreui-utilities';
 import { MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
 import { CliAbonModel } from './cliabon.Model';
 import { CliAbonService } from './cliabon.service';
@@ -9,23 +8,27 @@ import { ProductoModel } from './producto.Model';
 import { ProductoService } from './producto.service';
 import { ClienteModel } from './cliente.Model';
 import { ClienteService } from './cliente.service';
-
-import { ModalDirective} from 'ngx-bootstrap/modal';
 import * as XLSX from 'xlsx';
 import { NgxUiLoaderService } from 'ngx-ui-loader'; // Import NgxUiLoaderService
+import { Observable} from 'rxjs';
+import { map, startWith} from 'rxjs/operators';
+import { ModalDirective} from 'ngx-bootstrap/modal';
+import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl, FormGroupName} from '@angular/forms';
+import { ValidationFormsService } from './cliabon.Validation.service';
 
 
-/**
- * @title Basic use of `<table mat-table>`
- */
+
 @Component({
   selector: 'cliabon',
   styleUrls: ['cliabon.css'],
-  templateUrl: 'cliabon.html'
+  templateUrl: 'cliabon.html',
+  providers: [ ValidationFormsService ]
+
 })
 
 export class CliAbonComponent  implements OnInit {
 
+  public showModal: boolean;
   private _cliabonService;
   private _productoService;
   private _clienteService;
@@ -37,6 +40,7 @@ export class CliAbonComponent  implements OnInit {
   ClienteList: ClienteModel[];
   ClienteModel: ClienteModel= new ClienteModel();
 
+    
   output: any;
   errorMessage: any;
   @ViewChild('TABLE') table: ElementRef;
@@ -46,10 +50,16 @@ export class CliAbonComponent  implements OnInit {
   @ViewChild('infoModal') public infoModal: ModalDirective;
   dataSource: any;
   selection = new SelectionModel<CliAbonModel>(true, []);
+  @Input() panelWidth: 5000;
+  simpleForm: FormGroup;
+  submitted = false;
+  formErrors: any;
+
 
   constructor(@Inject(DOCUMENT) private _document: any, CliAbonService: CliAbonService, 
-  ProductoService: ProductoService, ClienteService: ClienteService, 
-  private changeDetectorRefs: ChangeDetectorRef, private ngxService: NgxUiLoaderService) {
+  ProductoService: ProductoService, ClienteService: ClienteService,
+  private changeDetectorRefs: ChangeDetectorRef, private ngxService: NgxUiLoaderService,
+  private fb: FormBuilder,  public vf: ValidationFormsService) {
 
     this._cliabonService = CliAbonService;
     this._productoService = ProductoService;
@@ -57,19 +67,46 @@ export class CliAbonComponent  implements OnInit {
     this.CliAbonList = [];
     this.ProductoList = [];
     this.ClienteList = [];
+    this.showModal = false;
+
+    this.filteredClis = this.myControl.valueChanges
+    .pipe(
+      startWith(''),
+      map(tabCliSearch => tabCliSearch ? this._filterClis(tabCliSearch) : this.ClienteList.slice()     
+      )
+    );
+
+    this.createForm();
+
+
+  }
+
+  
+  myControl = new FormControl();
+  
+  filteredClis: Observable<ClienteModel[]>;
+
+  myFunc() {
+    alert('hola');
+  }
+
+  private _filterClis(value: string): ClienteModel[] {
+    const filterValue = value.toString().toLowerCase();
+
+    return this.ClienteList.filter(tabCliSearch => tabCliSearch.cod_cli.toLowerCase().indexOf(filterValue) === 0 || tabCliSearch.nombre.toLowerCase().indexOf(filterValue) === 0);
+    ;
   }
   
   ngOnInit(): void {
     this.getCliente();
     this.getProducto();
     this.genGrid();
+    this.onReset();
+
+ 
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  search() {
-    alert('test');
   }
 
   getCliente() 
@@ -79,6 +116,11 @@ export class CliAbonComponent  implements OnInit {
         allcli => {
             this.ClienteList = allcli
             console.log(this.ClienteList);
+
+            let tmp = this.ClienteList.map(function (obj) {
+              return obj.id_cli.toString();
+            });
+
             this.ngxService.stop(); 
           },
         error => this.errorMessage = <any>error
@@ -137,16 +179,47 @@ export class CliAbonComponent  implements OnInit {
   nuevo() {
    this.CliAbonModel.id_abon = 0;
    this.CliAbonModel.id_cli = 0;
+   this.CliAbonModel.cod_cli = "";
    this.CliAbonModel.id_prod = 0;
    this.CliAbonModel.iobserv = "";
    this.CliAbonModel.cantidad = 0;
    this.CliAbonModel.precio = 0;
-   this.infoModal.show();
-
+   this.showModal = true
+//    this.infoModal.show();
   }
 
   // On Submit
   onSubmit() {
+
+    this.submitted = true;
+  
+    // stop here if form is invalid
+    if (this.simpleForm.invalid) {
+      return;
+    }
+
+
+    //identifica el id de cliente segun el cod_cli
+    let data: any;
+
+    let cod_cli = this.CliAbonModel.cod_cli.trim();
+
+    let id_prod: any;
+    
+    id_prod = this.f['id_prod'].value;
+
+    this.CliAbonModel.id_prod = id_prod;
+
+
+    data = this.ClienteList.filter(function (item) {
+      return item.cod_cli.includes(cod_cli.trim());
+    });
+
+    if (data.length > 0) {
+      this.CliAbonModel.id_cli =  data[0].id_cli;
+    }
+    //
+
     if (this.CliAbonModel.id_abon != 0) {
       this.ngxService.start();
       this._cliabonService.Update(this.CliAbonModel).subscribe(
@@ -170,9 +243,8 @@ export class CliAbonComponent  implements OnInit {
       );  
     }
     console.log(this.CliAbonModel);
-    this.infoModal.hide();
-    //this.genGrid();
-
+//    this.infoModal.show();
+    this.showModal = false;
   }
 
 
@@ -186,6 +258,7 @@ export class CliAbonComponent  implements OnInit {
       CliAbon => {
           this.CliAbonModel.id_abon = CliAbon.id_abon;
           this.CliAbonModel.id_cli = CliAbon.id_cli;
+          this.CliAbonModel.cod_cli = CliAbon.cod_cli;
           this.CliAbonModel.id_prod = CliAbon.id_prod;
           this.CliAbonModel.cantidad = CliAbon.cantidad;
           this.CliAbonModel.precio = CliAbon.precio;
@@ -196,7 +269,8 @@ export class CliAbonComponent  implements OnInit {
     );
 
     console.log(row);
-    this.infoModal.show();
+    this.showModal = true;
+  //  this.infoModal.show();
   }
 
   eliminar() {
@@ -218,30 +292,60 @@ export class CliAbonComponent  implements OnInit {
   }
 
 
-    /** Whether the number of selected elements matches the total number of rows. */
-    isAllSelected() {
-      const numSelected = this.selection.selected.length;      
-      let numRows = 0;
-      if (this.dataSource.data) {
-        numRows = this.dataSource.data.length;
-      } else {
-        numRows = 0;
-      }
-      return numSelected === numRows;
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;      
+    let numRows = 0;
+    if (this.dataSource.data) {
+      numRows = this.dataSource.data.length;
+    } else {
+      numRows = 0;
     }
-  
-    /** Selects all rows if they are not all selected; otherwise clear selection. */
-    masterToggle() {
-      this.isAllSelected() ?
-          this.selection.clear() :
-          this.dataSource.data.forEach(row => this.selection.select(row));
+    return numSelected === numRows;
+  }
+
+  closeModal() {
+    this.showModal = false;
+  //  this.infoModal.hide();
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: CliAbonModel): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-  
-    /** The label for the checkbox on the passed row */
-    checkboxLabel(row?: CliAbonModel): string {
-      if (!row) {
-        return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-      }
-      return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id_abon + 1}`;
-    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id_abon + 1}`;
+  }
+
+
+  //Form Validation functions
+
+  createForm() {
+    this.simpleForm = this.fb.group({
+      cantidad: ['', [Validators.required]],
+      precio: ['', [Validators.required]],
+      id_prod: ['', [Validators.required]],
+      cod_cli: ['', [Validators.required]],
+    });
+  }
+
+  // convenience getter for easy access to form fields
+  get f() { return this.simpleForm.controls; }
+
+  onReset() {
+
+    this.submitted = false;
+    this.simpleForm.reset();
+
+  } 
+
+
 }
+

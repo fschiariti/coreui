@@ -8,12 +8,11 @@
       <button class="btn" (click)="nuevoCliente()"><i class="fa fa-file"></i> &nbsp;Nuevo Cliente</button>
       <button class="btn" (click)="nuevoProducto()"><i class="fa fa-file"></i> &nbsp;Nuevo Producto</button>
       <button class="btn" (click)="eliminar()"><i class="fa fa-trash-o"></i> &nbsp;Eliminar</button>
-      <button class="btn" (click)="ExportTOExcel()"><i class="fa fa-file-excel-o"></i> &nbsp;Excel</button>
+      <button class="btn" (click)="ExportTOExcel()"><i class="fa fa-file-excel-o"></i> &nbsp;Excel</button>     
     </div>
   </li>
 </div>
 <div class="card-body">
-
   <div class="mat-elevation-z8" #TABLE>
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" #table class="mat-elevation-z8 table table-bordered table-striped table-sm">
 
@@ -88,85 +87,133 @@
     <mat-paginator [pageSize]="20" [pageSizeOptions]="[20, 50, 100]" showFirstLastButtons></mat-paginator>
   </div>
 </div>
+<div *ngIf="showModal">
+  <div _ngcontent-bix-c1="" aria-hidden="false" aria-labelledby="myModalLabel" bsmodal="" class="modal fade in show" role="dialog" tabindex="-99999999999" aria-modal="true" style="display: block;">
+      <div class="modal-dialog" >
+        <div class="modal-content modal-info" role="document">
+          <div class="modal-header">
+            <h5 class="modal-title">Editar</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+<!--          <form [formGroup]="simpleForm" #f="ngForm" novalidate (ngSubmit)="onSubmit()">-->
+            <form [formGroup]="simpleForm"  novalidate (ngSubmit)="onSubmit()" class="needs-validation">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <mat-form-field >
+                      <input type="text" panelWidth ="1000" displayWidth ="1000" class="form-control" [(ngModel)]="CliAbonModel.cod_cli" 
+                      placeholder="Seleccione cliente" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto" 
+                      formControlName="cod_cli"  
+                      [ngClass]="{ 'is-invalid': submitted && f.cod_cli.errors , 
+                      'is-valid': f.cod_cli.touched && !f.cod_cli.errors }"/>
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let tabCliSearch of filteredClis | async" [value]="tabCliSearch.cod_cli">
+                          <span>{{tabCliSearch.cod_cli}}</span> |
+                            <small>{{tabCliSearch.nombre}}</small> |
+                            (<span>{{tabCliSearch.id_cli}}</span>) 
+                            {{option}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                    <div *ngIf="submitted && f['cod_cli'].errors">
+                      <div *ngIf="f['cod_cli'].errors.required">Ingrese producto</div>
+                    </div>
 
-<div bsModal #infoModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-info" role="document">
-    <form #f="ngForm" novalidate (ngSubmit)="onSubmit()">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Editando</h4>
-          <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="form-group">
-                <label for="id_cli">Cliente</label>
-                <select required name="id_cli" #refmonth="ngModel" class="form-control" [(ngModel)]="CliAbonModel.id_cli">
-                  <option value=''>-Seleccione Cliente-</option>
-                  <option *ngFor="let cli of ClienteList" [ngValue]="cli.id_cli">
-                    {{cli.nombre}}
-                  </option>
-                </select>            
-              </div>
-            </div>
-          </div><!--/.row-->            
+                  </div>
+                </div>
+              </div>           
 
-          <div class="row">
-              <div class="col-sm-12">
-                <div class="form-group">
-                  <label for="id_prod">Producto</label>
-                  <select required name="id_prod" #refmonth="ngModel" class="form-control" [(ngModel)]="CliAbonModel.id_prod">
-                    <option value=''>-Seleccione Producto-</option>
-                    <option *ngFor="let prod of ProductoList" [ngValue]="prod.id_prod">
-                      {{prod.descrip}}
-                    </option>
-                  </select>            
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label for="id_prod">Producto</label>
+                    <select  name="id_prod" class="form-control"  
+                      formControlName="id_prod" required [(ngModel)]="CliAbonModel.id_prod" 
+                      [ngClass]="{ 'is-invalid': submitted && f.id_prod.errors , 
+                      'is-valid': f.id_prod.touched && !f.id_prod.errors }">
+                      <option value=''>-Seleccione Producto-</option>
+                      <option *ngFor="let prod of ProductoList" [ngValue]="prod.id_prod">
+                        {{prod.descrip}}
+                      </option>
+                    </select>            
+                    <div *ngIf="submitted && f['id_prod'].errors">
+                      <div *ngIf="f['id_prod'].errors.required">Ingrese producto</div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div><!--/.row-->            
 
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="form-group">
-                  <label for="cantidad">Cantidad</label>
-                  <input type="text" class="form-control" name="cantidad" id="cantidad" [(ngModel)]="CliAbonModel.cantidad" >
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label for="cantidad">Cantidad</label>
+                    <input type="text" class="form-control" name="cantidad" id="cantidad" [(ngModel)]="CliAbonModel.cantidad" 
+                    formControlName="cantidad"
+                    required
+                    autofocus
+                    [ngClass]="{ 'is-invalid': submitted && f.cantidad.errors, 'is-valid': f.cantidad.touched && !f.cantidad.errors }" />
+                    <div *ngIf="submitted && f['cantidad'].errors" class="invalid-feedback">
+                      <div *ngIf="f['cantidad'].trim().errors.required">Ingrese cantidad</div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div><!--/.row-->
-
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="form-group">
-                  <label for="precio">Precio</label>
-                  <input type="text" class="form-control" name="precio" id="precio" [(ngModel)]="CliAbonModel.precio" >
+          
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label for="precio">Precio</label>
+                    <input type="text" class="form-control" name="precio" id="precio" [(ngModel)]="CliAbonModel.precio" 
+                    formControlName="precio"
+                    required
+                    autofocus
+                    [ngClass]="{ 'is-invalid': submitted && f.precio.errors, 'is-valid': f.precio.touched && !f.precio.errors }" />
+                    <div *ngIf="submitted && f['precio'].errors" class="invalid-feedback">
+                      <div *ngIf="f['precio'].trim().errors.required">Ingrese precio</div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div><!--/.row-->
-
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="form-group">
-                  <label for="iobserv">Observacion</label>
-                  <input type="text" class="form-control" name="iobserv" id="iobserv" [(ngModel)]="CliAbonModel.iobserv" >
+          
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label for="iobserv">Observacion</label>
+                    <input type="text" class="form-control" name="iobserv" id="iobserv" [(ngModel)]="CliAbonModel.iobserv" >
+                  </div>
                 </div>
               </div>
-            </div><!--/.row-->
-
-        </div>
+            </form>          
+          </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-info">Guardar</button>
-          <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Cancelar</button>
+            <button type="button" class="btn btn-danger" (click)="onSubmit()">
+              <span class="btn btn-danger">Guardar</span>
+            </button>
+            <button type="button" class="btn btn-success" (click)="closeModal()">
+              <span class="btn btn-success">Cancelar</span>
+            </button>
         </div>
-      </div><!-- /.modal-content -->
-    </form>
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+      </div>
+    </div>
+</div>
+<div class="col-md-6">
+  <div class="card bg-secondary" [ngClass]="{ 'bg-info' : simpleForm.valid }">
+    <div class="card-body">
+      <pre>Value: <code>{{ simpleForm.value | json }}</code></pre>
+      <p>
+        Status: {{ simpleForm.status }}
+      </p>
+      <p>
+        Errors: {{ simpleForm.errors | json }}
+      </p>
+    </div>
+  </div>
+</div>
+
+
 <ngx-ui-loader></ngx-ui-loader>
 
 
-<!-- Copyright 2019 Google Inc. All Rights Reserved.
-    Use of this source code is governed by an MIT-style license that
-    can be found in the LICENSE file at http://angular.io/license -->

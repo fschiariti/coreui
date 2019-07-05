@@ -8,6 +8,10 @@ import { ClienteService } from './cliente.service';
 import { ModalDirective} from 'ngx-bootstrap/modal';
 import * as XLSX from 'xlsx';
 import { NgxUiLoaderService } from 'ngx-ui-loader'; // Import NgxUiLoaderService
+import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl, FormGroupName} from '@angular/forms';
+import { ValidationFormsService } from './cliente.Validation.service';
+
+import { ValidatorFn, ValidationErrors } from '@angular/forms';
 
 
 /**
@@ -16,11 +20,13 @@ import { NgxUiLoaderService } from 'ngx-ui-loader'; // Import NgxUiLoaderService
 @Component({
   selector: 'cliente',
   styleUrls: ['cliente.css'],
-  templateUrl: 'cliente.html'
+  templateUrl: 'cliente.html',
+  providers: [ ValidationFormsService ]
 })
 
 export class ClienteComponent  implements OnInit {
 
+  
   private _clienteService;
   rowInfo: any;
   ClienteList: ClienteModel[];
@@ -34,17 +40,29 @@ export class ClienteComponent  implements OnInit {
   @ViewChild('infoModal') public infoModal: ModalDirective;
   dataSource: any;
   selection = new SelectionModel<ClienteModel>(true, []);
+  simpleForm: FormGroup;
+  submitted = false;
+  formErrors: any;
 
   constructor(@Inject(DOCUMENT) private _document: any, clienteService: ClienteService, 
-  private changeDetectorRefs: ChangeDetectorRef, private ngxService: NgxUiLoaderService) {
+  private changeDetectorRefs: ChangeDetectorRef, private ngxService: NgxUiLoaderService,
+  private fb: FormBuilder,  public vf: ValidationFormsService) {
 
     this._clienteService = clienteService;
+    this.formErrors = this.vf.errorMessages;
+
+ //   this.simpleForm = new FormGroup({
+ //     nombre: new FormControl()
+ //   });
+
+    this.createForm();
 
   }
   
   ngOnInit(): void {
 //    this.dataSource.sort = this.sort;
     this.genGrid();
+    this.onReset();
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -82,6 +100,7 @@ export class ClienteComponent  implements OnInit {
   }
 
   nuevo() {
+    this.onReset();
     this.ClienteModel.id_cli = 0;
     this.ClienteModel.cod_cli = "";
     this.ClienteModel.nombre = "";
@@ -91,6 +110,14 @@ export class ClienteComponent  implements OnInit {
 
   // On Submit
   onSubmit() {
+
+    this.submitted = true;
+  
+    // stop here if form is invalid
+    if (this.simpleForm.invalid) {
+      return;
+    }
+
     if (this.ClienteModel.id_cli != 0) {
       this.ngxService.start();
       this._clienteService.Update(this.ClienteModel).subscribe(
@@ -140,6 +167,7 @@ export class ClienteComponent  implements OnInit {
     );
 
     console.log(row);
+    this.onReset();
     this.infoModal.show();
   }
 
@@ -162,32 +190,55 @@ export class ClienteComponent  implements OnInit {
   }
 
 
-    /** Whether the number of selected elements matches the total number of rows. */
-    isAllSelected() {
-      const numSelected = this.selection.selected.length;      
-      let numRows = 0;
-      if (this.dataSource.data) {
-        numRows = this.dataSource.data.length;
-      } else {
-        numRows = 0;
-      }
-      return numSelected === numRows;
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;      
+    let numRows = 0;
+    if (this.dataSource.data) {
+      numRows = this.dataSource.data.length;
+    } else {
+      numRows = 0;
     }
-  
-    /** Selects all rows if they are not all selected; otherwise clear selection. */
-    masterToggle() {
-      this.isAllSelected() ?
-          this.selection.clear() :
-          this.dataSource.data.forEach(row => this.selection.select(row));
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: ClienteModel): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-  
-    /** The label for the checkbox on the passed row */
-    checkboxLabel(row?: ClienteModel): string {
-      if (!row) {
-        return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-      }
-      return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id_cli + 1}`;
-    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id_cli + 1}`;
+  }
+
+
+  //Form Validation functions
+
+  createForm() {
+    this.simpleForm = this.fb.group({
+      id_cli: ['', [Validators.nullValidator]],
+      cod_cli: ['', [Validators.required]],
+      nombre: ['', [Validators.required]],
+    });
+  }
+
+  // convenience getter for easy access to form fields
+  get f() { return this.simpleForm.controls; }
+
+  onReset() {
+
+    this.submitted = false;
+    this.simpleForm.reset();
+
+  } 
 }
 
 

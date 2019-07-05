@@ -52,5 +52,31 @@ export const navItems: NavData[] = [
     name: 'Abonos',
     url: '/archivos/cliabon',
     icon: 'icon-drop'
+  },
+  {
+    name: 'Forms',
+    url: '/forms',
+    icon: 'icon-note',
+    children: [
+      {
+        name: 'Basic Forms',
+        url: '/forms/basic-forms',
+        icon: 'icon-note'
+      },
+      {
+        name: 'Advanced Forms',
+        url: '/forms/advanced-forms',
+        icon: 'icon-note'
+      },
+      {
+        name: 'Validation',
+        url: '/forms/validation-forms',
+        icon: 'icon-note',
+        badge: {
+          variant: 'danger',
+          text: 'PRO'
+        }
+      }
+    ]
   }
 ];
