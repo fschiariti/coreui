@@ -11,8 +11,10 @@ namespace facturawebApi.Interface
         void Insert(Producto producto);
         bool CheckExists(string nombre);
         Producto GetById(int id);
+        Producto GetByCod(string cod_prod, int id_empre);
         bool Delete(int id);
         bool Update(Producto producto);
         List<Producto> GetAll();
+        List<Producto> GetAllByEmpre(int id_empre);
     }
 }

@@ -44,7 +44,7 @@ export class CliAbonComponent  implements OnInit {
   output: any;
   errorMessage: any;
   @ViewChild('TABLE') table: ElementRef;
-  displayedColumns: string[] = ['select','cod_cli', 'nombre', 'cod_prod', 'descrip', 'cantidad', 'precio', 'observ'];
+  displayedColumns: string[] = ['select','nombre'];
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('infoModal') public infoModal: ModalDirective;
@@ -69,26 +69,31 @@ export class CliAbonComponent  implements OnInit {
     this.ClienteList = [];
     this.showModal = false;
 
+    
     this.filteredClis = this.myControl.valueChanges
     .pipe(
       startWith(''),
       map(tabCliSearch => tabCliSearch ? this._filterClis(tabCliSearch) : this.ClienteList.slice()     
       )
     );
+    
 
     this.createForm();
 
 
   }
 
+  ngOnInit(): void {
+    this.genGrid();
+    this.getCliente();
+    this.getProducto();
+    this.onReset(); 
+  }
+
   
   myControl = new FormControl();
   
   filteredClis: Observable<ClienteModel[]>;
-
-  myFunc() {
-    alert('hola');
-  }
 
   private _filterClis(value: string): ClienteModel[] {
     const filterValue = value.toString().toLowerCase();
@@ -97,14 +102,6 @@ export class CliAbonComponent  implements OnInit {
     ;
   }
   
-  ngOnInit(): void {
-    this.getCliente();
-    this.getProducto();
-    this.genGrid();
-    this.onReset();
-
- 
-  }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
@@ -180,12 +177,12 @@ export class CliAbonComponent  implements OnInit {
    this.CliAbonModel.id_abon = 0;
    this.CliAbonModel.id_cli = 0;
    this.CliAbonModel.cod_cli = "";
-   this.CliAbonModel.id_prod = 0;
+   this.CliAbonModel.nombre = "";
+   this.CliAbonModel.id_prod = "";
    this.CliAbonModel.iobserv = "";
    this.CliAbonModel.cantidad = 0;
    this.CliAbonModel.precio = 0;
    this.showModal = true
-//    this.infoModal.show();
   }
 
   // On Submit
@@ -243,7 +240,6 @@ export class CliAbonComponent  implements OnInit {
       );  
     }
     console.log(this.CliAbonModel);
-//    this.infoModal.show();
     this.showModal = false;
   }
 
@@ -259,6 +255,7 @@ export class CliAbonComponent  implements OnInit {
           this.CliAbonModel.id_abon = CliAbon.id_abon;
           this.CliAbonModel.id_cli = CliAbon.id_cli;
           this.CliAbonModel.cod_cli = CliAbon.cod_cli;
+          this.CliAbonModel.nombre = CliAbon.nombre;
           this.CliAbonModel.id_prod = CliAbon.id_prod;
           this.CliAbonModel.cantidad = CliAbon.cantidad;
           this.CliAbonModel.precio = CliAbon.precio;
@@ -270,7 +267,6 @@ export class CliAbonComponent  implements OnInit {
 
     console.log(row);
     this.showModal = true;
-  //  this.infoModal.show();
   }
 
   eliminar() {
@@ -296,12 +292,20 @@ export class CliAbonComponent  implements OnInit {
   isAllSelected() {
     const numSelected = this.selection.selected.length;      
     let numRows = 0;
-    if (this.dataSource.data) {
-      numRows = this.dataSource.data.length;
-    } else {
-      numRows = 0;
+
+    if (this.dataSource) {
+      if (this.dataSource.data) {
+        numRows = this.dataSource.data.length;
+      } else {
+        numRows = 0;
+      }  
+      numSelected === numRows;
     }
-    return numSelected === numRows;
+    else {
+      numSelected === 0;
+    }
+
+    return numSelected;
   }
 
   closeModal() {
@@ -333,7 +337,27 @@ export class CliAbonComponent  implements OnInit {
       precio: ['', [Validators.required]],
       id_prod: ['', [Validators.required]],
       cod_cli: ['', [Validators.required]],
+      nombre: ['', [Validators.required]],
+      iobserv: ['', [Validators.nullValidator]],
+
     });
+  }
+
+  getNombre(cod_cli) {
+
+    //alert(cod_cli);
+    if (!cod_cli) return cod_cli;
+
+    if (typeof this.ClienteList != 'undefined') {
+      let index = this.ClienteList.findIndex(state => state.cod_cli === cod_cli);
+      if (index == -1) {
+        this.CliAbonModel.nombre = '';
+      } else {
+        this.CliAbonModel.nombre = this.ClienteList[index].nombre;
+      }
+  
+    }
+
   }
 
   // convenience getter for easy access to form fields
@@ -348,4 +372,3 @@ export class CliAbonComponent  implements OnInit {
 
 
 }
-

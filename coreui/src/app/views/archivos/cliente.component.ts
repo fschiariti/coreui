@@ -34,7 +34,7 @@ export class ClienteComponent  implements OnInit {
   output: any;
   errorMessage: any;
   @ViewChild('TABLE') table: ElementRef;
-  displayedColumns: string[] = ['select','cod_cli', 'nombre', 'nro_doc'];
+  displayedColumns: string[] = ['select', 'nombre'];
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('infoModal') public infoModal: ModalDirective;
@@ -51,16 +51,11 @@ export class ClienteComponent  implements OnInit {
     this._clienteService = clienteService;
     this.formErrors = this.vf.errorMessages;
 
- //   this.simpleForm = new FormGroup({
- //     nombre: new FormControl()
- //   });
-
     this.createForm();
 
   }
   
   ngOnInit(): void {
-//    this.dataSource.sort = this.sort;
     this.genGrid();
     this.onReset();
   }
@@ -104,6 +99,7 @@ export class ClienteComponent  implements OnInit {
     this.ClienteModel.id_cli = 0;
     this.ClienteModel.cod_cli = "";
     this.ClienteModel.nombre = "";
+    this.ClienteModel.nro_doc = "";
     this.infoModal.show();
 
   }
@@ -161,6 +157,7 @@ export class ClienteComponent  implements OnInit {
           this.ClienteModel.id_cli = cliente.id_cli;
           this.ClienteModel.cod_cli = cliente.cod_cli;
           this.ClienteModel.nombre = cliente.nombre;
+          this.ClienteModel.nro_doc = cliente.nro_doc;
           console.log(this.ClienteModel);
         },
       error => this.errorMessage = <any>error
@@ -194,13 +191,21 @@ export class ClienteComponent  implements OnInit {
   isAllSelected() {
     const numSelected = this.selection.selected.length;      
     let numRows = 0;
-    if (this.dataSource.data) {
-      numRows = this.dataSource.data.length;
-    } else {
-      numRows = 0;
+
+    if (this.dataSource) {
+      if (this.dataSource.data) {
+        numRows = this.dataSource.data.length;
+      } else {
+        numRows = 0;
+      }  
+      numSelected === numRows;
     }
-    return numSelected === numRows;
+    else {
+      numSelected === 0;
+    }
+    return numSelected;
   }
+
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
@@ -227,6 +232,7 @@ export class ClienteComponent  implements OnInit {
       id_cli: ['', [Validators.nullValidator]],
       cod_cli: ['', [Validators.required]],
       nombre: ['', [Validators.required]],
+      nro_doc: ['', [Validators.nullValidator]],
     });
   }
 

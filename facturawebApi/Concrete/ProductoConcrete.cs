@@ -64,6 +64,25 @@ namespace facturawebApi.Concrete
             return result;
         }
 
+        public List<Producto> GetAllByEmpre(int id_empre)
+        {
+            var result = (from producto in _context.Producto
+                          where producto.id_empre == id_empre
+                          select producto).ToList();
+
+            return result;
+        }
+
+        public Producto GetByCod(string cod_prod, int id_empre)
+        {
+            var result = (from producto in _context.Producto
+                          where producto.cod_prod == cod_prod && producto.id_empre == id_empre
+                          select producto).FirstOrDefault();
+
+            return result;
+
+        }
+
         public Producto GetById(int id)
         {
             var result = (from producto in _context.Producto  where producto.id_prod == id

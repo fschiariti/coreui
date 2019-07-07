@@ -60,7 +60,16 @@ namespace facturawebApi.Concrete
         public List<Cliente> GetAll()
         {
             var result = (from Cliente in _context.Cliente
-                          select Cliente).Take(50).ToList();
+                          select Cliente).ToList();
+
+            return result;
+        }
+
+        public List<Cliente> GetAllByEmpre(int id_empre)
+        {
+            var result = (from Cliente in _context.Cliente
+                          where Cliente.id_empre == id_empre
+                          select Cliente).ToList();
 
             return result;
         }
@@ -68,6 +77,16 @@ namespace facturawebApi.Concrete
         public Cliente GetById(int id)
         {
             var result = (from Cliente in _context.Cliente  where Cliente.id_cli == id
+                          select Cliente).FirstOrDefault();
+
+            return result;
+
+        }
+
+        public Cliente GetByCod(string cod_cli, int id_empre)
+        {
+            var result = (from Cliente in _context.Cliente
+                          where Cliente.cod_cli == cod_cli && Cliente.id_empre == id_empre
                           select Cliente).FirstOrDefault();
 
             return result;
@@ -84,6 +103,7 @@ namespace facturawebApi.Concrete
 
         public bool Update(Cliente cliente)
         {
+            _context.Entry(cliente).Property(x => x.nro_doc).IsModified = true;
             _context.Entry(cliente).Property(x => x.nombre).IsModified = true;
             var result = _context.SaveChanges();
             if (result > 0)

@@ -41,6 +41,38 @@ namespace facturawebApi.Controllers
             }
         }
 
+        // GET api/Cliente/57
+        [Route("[action]/{id_empre}")]
+        [HttpGet]
+        public IEnumerable<Cliente> GetAllByEmpre(int id_empre)
+        {
+            try
+            {
+                return _cliente.GetAllByEmpre(id_empre);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        // GET: api/GetByCod/897/57
+        [Route("[action]/{cod_cli}/{id_empre}")]
+        [HttpGet]
+        public Cliente GetByCod(string cod_cli, int id_empre)
+        {
+            try
+            {
+                return _cliente.GetByCod(cod_cli, id_empre);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         // GET: api/Cliente/5
         [HttpGet("{id}")]
         public Cliente Get(int id)
@@ -55,6 +87,8 @@ namespace facturawebApi.Controllers
                 throw;
             }
         }
+
+
 
         // POST: api/Cliente
         [HttpPost]

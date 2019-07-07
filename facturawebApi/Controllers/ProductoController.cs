@@ -56,6 +56,40 @@ namespace facturawebApi.Controllers
             }
         }
 
+        // GET: api/GetByCod/5/57
+        [Route("[action]/{cod_prod}/{id_empre}")]
+        [HttpGet]
+        public Producto GetByCod(string cod_prod, int id_empre)
+        {
+            try
+            {
+                return _producto.GetByCod(cod_prod, id_empre);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
+        // GET: api/GetAllByEmpre/57
+        [Route("[action]/{id_empre}")]
+        [HttpGet]
+        public IEnumerable<Producto> GetAllByEmpre(int id_empre)
+        {
+            try
+            {
+                return _producto.GetAllByEmpre(id_empre);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
         // POST: api/Producto
         [HttpPost]
         public HttpResponseMessage Post([FromBody] ProductoViewModel productoViewModel)
