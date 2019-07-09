@@ -144,7 +144,7 @@ namespace facturawebApi.Controllers
         [HttpPut("{id}")]
         public HttpResponseMessage Put(int id, [FromBody] ProductoViewModel productoViewModel)
         {
-//            try
+            try
             {
                 var temp = AutoMapper.Mapper.Map<Producto>(productoViewModel);
                 _producto.Update(temp);
@@ -156,7 +156,7 @@ namespace facturawebApi.Controllers
 
                 return response;
             }
-/*            catch (Exception)
+            catch (Exception)
             {
                 var response = new HttpResponseMessage()
                 {
@@ -166,7 +166,7 @@ namespace facturawebApi.Controllers
 
                 return response;
 
-            }*/
+            }
         }
 
         // DELETE: api/Cliente/5

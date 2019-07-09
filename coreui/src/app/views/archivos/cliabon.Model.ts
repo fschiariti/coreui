@@ -10,5 +10,7 @@ export class CliAbonModel
     public precio: number = 0;
     public iobserv: string = "";
     public id_empre: number = 0;
+    public referencia: string = "";
+    public items: [];
 
 }

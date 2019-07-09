@@ -7,9 +7,9 @@
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
       </mat-form-field>
       <button class="btn" (click)="nuevo()"><i class="fa fa-file"></i> &nbsp;Nuevo Abono</button>
-      <button class="btn" (click)="nuevoCliente()"><i class="fa fa-file"></i> &nbsp;Nuevo Cliente</button>
-      <button class="btn" (click)="nuevoProducto()"><i class="fa fa-file"></i> &nbsp;Nuevo Producto</button>
-      <button class="btn" (click)="eliminar()"><i class="fa fa-trash-o"></i> &nbsp;Eliminar</button>
+      <button class="btn" (click)="addList()"><i class="fa fa-file"></i>Procesar</button>
+      <button class="btn" (click)="nuevoProducto()"><i class="fa fa-file"></i>Nuevo Producto</button>
+      <button class="btn" (click)="eliminar()"><i class="fa fa-trash-o"></i>Eliminar</button>
       <button class="btn" (click)="ExportTOExcel()"><i class="fa fa-file-excel-o"></i> &nbsp;Excel</button>     
     </div>
   </li>

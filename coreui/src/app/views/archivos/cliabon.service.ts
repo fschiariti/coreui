@@ -3,6 +3,7 @@ import { Observable, throwError } from 'rxjs'
 import { catchError, tap } from 'rxjs/operators'
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { CliAbonModel } from './cliabon.Model';
+import { CliAbonListModel } from './cliabonList.Model';
 import { Router } from '@angular/router';
 import{ environment } from '../../../environments/environment';
 
@@ -13,6 +14,7 @@ import{ environment } from '../../../environments/environment';
 export class CliAbonService {
     private data: any;
     private apiUrl = environment.apiEndpoint + "/api/cliabon/";
+    private apiListUrl = environment.apiEndpoint + "/api/compvta/";
     token: any;
     username: any;
     clienteRow: any;
@@ -64,6 +66,17 @@ export class CliAbonService {
                 catchError(this.handleError)
             );
     }
+
+    // AddList
+    public AddList(cliabonList:  CliAbonListModel[]) {
+        let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
+        return this.http.post<any>(this.apiListUrl, cliabonList, { headers: headers })
+            .pipe(
+                catchError(this.handleError)
+            );
+    }
+
 
     // Delete
     public Delete(id_abon) {

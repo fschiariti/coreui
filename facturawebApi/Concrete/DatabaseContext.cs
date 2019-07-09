@@ -19,5 +19,7 @@ namespace facturawebApi.Concrete
         public DbSet<CliAbon> CliAbon { get; set; }
         public DbSet<Usuarios> Usuarios { get; set; }
         public DbSet<Producto> Producto { get; set; }
+        public DbSet<HVenta> HVenta { get; set; }
+        public DbSet<IVenta> IVenta { get; set; }
     }
 }

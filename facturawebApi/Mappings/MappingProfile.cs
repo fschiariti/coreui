@@ -34,6 +34,14 @@ namespace facturawebApi.Mappings
                 .ForMember(dest => dest.precio, opt => opt.MapFrom(src => src.precio))
                 .ForMember(dest => dest.iobserv, opt => opt.MapFrom(src => src.iobserv));
 
+            CreateMap<HVentaViewModel, HVenta>()
+                .ForMember(dest => dest.id_comp, opt => opt.MapFrom(src => src.id_comp))
+                .ForMember(dest => dest.id_cli, opt => opt.MapFrom(src => src.id_cli))
+                .ForMember(dest => dest.referencia, opt => opt.MapFrom(src => src.referencia))
+                .ForMember(dest => dest.imp_tot, opt => opt.MapFrom(src => src.imp_tot))
+                .ForMember(dest => dest.observ, opt => opt.MapFrom(src => src.observ))
+                .ForMember(dest => dest.id_empre, opt => opt.MapFrom(src => src.id_empre));
+
         }
     }
 }

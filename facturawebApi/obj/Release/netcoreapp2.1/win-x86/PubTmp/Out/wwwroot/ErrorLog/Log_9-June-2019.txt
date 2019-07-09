@@ -1,0 +1,132 @@
+
+09/06/2019 02:50:00 p.m.
+------------------------------------------------------------------------------------------------
+Controller Name :- CliAbon
+Action Method Name :- Get
+------------------------------------------------------------------------------------------------
+Microsoft.AspNetCore.Mvc.Filters.ExceptionContext
+Message ---
+{0}Unable to resolve service for type 'facturawebApi.Interface.ICliAbon' while attempting to activate 'facturawebApi.Controllers.CliAbonController'.
+Source ---
+{0}Microsoft.Extensions.DependencyInjection.Abstractions
+StackTrace ---
+{0}   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.GetService(IServiceProvider sp, Type type, Type requiredBy, Boolean isDefaultParameterRequired)
+   at lambda_method(Closure , IServiceProvider , Object[] )
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.<>c__DisplayClass4_0.<CreateActivator>b__0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass5_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+TargetSite ---
+{0}System.Object GetService(System.IServiceProvider, System.Type, System.Type, Boolean)
+
+
+09/06/2019 02:56:39 p.m.
+------------------------------------------------------------------------------------------------
+Controller Name :- CliAbon
+Action Method Name :- Get
+------------------------------------------------------------------------------------------------
+Microsoft.AspNetCore.Mvc.Filters.ExceptionContext
+Message ---
+{0}Unable to resolve service for type 'facturawebApi.Interface.ICliAbon' while attempting to activate 'facturawebApi.Controllers.CliAbonController'.
+Source ---
+{0}Microsoft.Extensions.DependencyInjection.Abstractions
+StackTrace ---
+{0}   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.GetService(IServiceProvider sp, Type type, Type requiredBy, Boolean isDefaultParameterRequired)
+   at lambda_method(Closure , IServiceProvider , Object[] )
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.<>c__DisplayClass4_0.<CreateActivator>b__0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass5_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+TargetSite ---
+{0}System.Object GetService(System.IServiceProvider, System.Type, System.Type, Boolean)
+
+
+09/06/2019 02:56:42 p.m.
+------------------------------------------------------------------------------------------------
+Controller Name :- CliAbon
+Action Method Name :- Get
+------------------------------------------------------------------------------------------------
+Microsoft.AspNetCore.Mvc.Filters.ExceptionContext
+Message ---
+{0}Unable to resolve service for type 'facturawebApi.Interface.ICliAbon' while attempting to activate 'facturawebApi.Controllers.CliAbonController'.
+Source ---
+{0}Microsoft.Extensions.DependencyInjection.Abstractions
+StackTrace ---
+{0}   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.GetService(IServiceProvider sp, Type type, Type requiredBy, Boolean isDefaultParameterRequired)
+   at lambda_method(Closure , IServiceProvider , Object[] )
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.<>c__DisplayClass4_0.<CreateActivator>b__0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass5_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+TargetSite ---
+{0}System.Object GetService(System.IServiceProvider, System.Type, System.Type, Boolean)
+
+
+09/06/2019 02:56:45 p.m.
+------------------------------------------------------------------------------------------------
+Controller Name :- CliAbon
+Action Method Name :- Get
+------------------------------------------------------------------------------------------------
+Microsoft.AspNetCore.Mvc.Filters.ExceptionContext
+Message ---
+{0}Unable to resolve service for type 'facturawebApi.Interface.ICliAbon' while attempting to activate 'facturawebApi.Controllers.CliAbonController'.
+Source ---
+{0}Microsoft.Extensions.DependencyInjection.Abstractions
+StackTrace ---
+{0}   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.GetService(IServiceProvider sp, Type type, Type requiredBy, Boolean isDefaultParameterRequired)
+   at lambda_method(Closure , IServiceProvider , Object[] )
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.<>c__DisplayClass4_0.<CreateActivator>b__0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass5_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+TargetSite ---
+{0}System.Object GetService(System.IServiceProvider, System.Type, System.Type, Boolean)
+
+
+09/06/2019 02:59:02 p.m.
+------------------------------------------------------------------------------------------------
+Controller Name :- CliAbon
+Action Method Name :- Get
+------------------------------------------------------------------------------------------------
+Microsoft.AspNetCore.Mvc.Filters.ExceptionContext
+Message ---
+{0}Unable to resolve service for type 'facturawebApi.Interface.ICliAbon' while attempting to activate 'facturawebApi.Controllers.CliAbonController'.
+Source ---
+{0}Microsoft.Extensions.DependencyInjection.Abstractions
+StackTrace ---
+{0}   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.GetService(IServiceProvider sp, Type type, Type requiredBy, Boolean isDefaultParameterRequired)
+   at lambda_method(Closure , IServiceProvider , Object[] )
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.<>c__DisplayClass4_0.<CreateActivator>b__0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass5_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+TargetSite ---
+{0}System.Object GetService(System.IServiceProvider, System.Type, System.Type, Boolean)
+
+
+09/06/2019 03:01:10 p.m.
+------------------------------------------------------------------------------------------------
+Controller Name :- CliAbon
+Action Method Name :- Get
+------------------------------------------------------------------------------------------------
+Microsoft.AspNetCore.Mvc.Filters.ExceptionContext
+Message ---
+{0}Unable to resolve service for type 'facturawebApi.Interface.ICliAbon' while attempting to activate 'facturawebApi.Controllers.CliAbonController'.
+Source ---
+{0}Microsoft.Extensions.DependencyInjection.Abstractions
+StackTrace ---
+{0}   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.GetService(IServiceProvider sp, Type type, Type requiredBy, Boolean isDefaultParameterRequired)
+   at lambda_method(Closure , IServiceProvider , Object[] )
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.<>c__DisplayClass4_0.<CreateActivator>b__0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass5_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+TargetSite ---
+{0}System.Object GetService(System.IServiceProvider, System.Type, System.Type, Boolean)
+

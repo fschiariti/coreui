@@ -84,6 +84,8 @@ namespace facturawebApi
             services.AddTransient<ICliente, ClienteConcrete>();
             services.AddTransient<ICliAbon, CliAbonConcrete>();
             services.AddTransient<IProducto, ProductoConcrete>();
+            services.AddTransient<IHVenta, HVentaConcrete>();
+            services.AddTransient<IIVenta, IVentaConcrete>();
 
 
             //services.AddScoped<IUrlHelper>(implementationFactory =>

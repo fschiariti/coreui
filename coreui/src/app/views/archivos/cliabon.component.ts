@@ -7,6 +7,7 @@ import { CliAbonService } from './cliabon.service';
 import { ProductoModel } from './producto.Model';
 import { ProductoService } from './producto.service';
 import { ClienteModel } from './cliente.Model';
+import { CliAbonListModel } from './cliabonList.Model';
 import { ClienteService } from './cliente.service';
 import * as XLSX from 'xlsx';
 import { NgxUiLoaderService } from 'ngx-ui-loader'; // Import NgxUiLoaderService
@@ -155,6 +156,46 @@ export class CliAbonComponent  implements OnInit {
 
   }
 
+
+  addList() {
+    console.log(this.CliAbonList);
+
+    let lote = new Array();
+
+
+    this.CliAbonList.forEach(element => {
+      let obj = new CliAbonListModel();
+      obj.id_cli = element.id_cli;
+      obj.fecha = new Date(); 
+      obj.referencia = element.referencia;
+      obj.id_empre = 57;
+      let items = new Array();
+      let item = {id_prod: element.id_prod, 
+                  descrip: element.descrip, 
+                  precio: element.precio, 
+                  cantidad: element.cantidad,
+                  id_empre: obj.id_empre}
+
+      items.push(item);                  
+      obj.items = items;
+      lote.push(obj);
+    });
+
+    this.ngxService.start();
+    this._cliabonService.AddList(lote).subscribe(
+      res => {
+          console.log(res);
+          if (res.StatusCode == 200) {
+            alert(res + 'ok');
+          } else {
+            alert(res + 'error');
+          }
+          this.ngxService.stop();
+        },
+      error => this.errorMessage = <any>error
+    );
+
+  }
 
   nuevoProducto() {
     
