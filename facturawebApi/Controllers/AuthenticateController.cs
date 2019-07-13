@@ -37,11 +37,11 @@ namespace facturawebApi.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var loginstatus = _usuarios.Authenticate(value.Usuario, EncryptionLibrary.EncryptText(value.Password));
+                    var loginstatus = _usuarios.Authenticate(value.usuario, EncryptionLibrary.EncryptText(value.password));
 
                     if (loginstatus)
                     {
-                        var userdetails = _usuarios.GetDetailsbyCredentials(value.Usuario);
+                        var userdetails = _usuarios.GetDetailsbyCredentials(value.usuario);
 
                         if (userdetails != null)
                         {
@@ -52,31 +52,33 @@ namespace facturawebApi.Controllers
                             {
                                 Subject = new ClaimsIdentity(new Claim[]
                                 {
-                                        new Claim(ClaimTypes.Name, userdetails.Usuario.ToString())
+                                        new Claim(ClaimTypes.Name, userdetails.usuario.ToString())
                                 }),
                                 Expires = DateTime.UtcNow.AddDays(1),
                                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
                                     SecurityAlgorithms.HmacSha256Signature)
                             };
                             var token = tokenHandler.CreateToken(tokenDescriptor);
-                            value.Token = tokenHandler.WriteToken(token);
+                            value.token = tokenHandler.WriteToken(token);
 
                             // remove password before returning
-                            value.Password = null;
+                            value.password = null;
+                            //set id_empre
+                            value.id_empre = userdetails.id_empre;
 
                             return Ok(value);
 
                         }
                         else
                         {
-                            value.Password = null;
+                            value.password = null;
                             return Ok(value);
                         }
                     }
-                    value.Password = null;
+                    value.password = null;
                     return Ok(value);
                 }
-                value.Password = null;
+                value.password = null;
                 return Ok(value);
             }
             catch (Exception)

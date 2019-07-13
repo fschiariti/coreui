@@ -11,11 +11,12 @@ namespace facturawebApi.ViewModel
     public class LoginRequestViewModel
     {
         [Required(ErrorMessage = "Enter UserName")]
-        public string Usuario { get; set; }
+        public string usuario { get; set; }
 
         [Required(ErrorMessage = "Enter Password")]
-        public string Password { get; set; }
-        public string Token { get; set; }
+        public string password { get; set; }
+        public string token { get; set; }
+        public int id_empre { get; set; }
     }
 
 

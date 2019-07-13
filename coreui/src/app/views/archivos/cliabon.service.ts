@@ -20,7 +20,7 @@ export class CliAbonService {
     clienteRow: any;
 
     constructor(private http: HttpClient) {
-        this.data = JSON.parse(localStorage.getItem('AdminUser'));
+        this.data = JSON.parse(localStorage.getItem('usuario'));
         this.token = this.data.token;
         this.clienteRow = new CliAbonModel();
     }
@@ -30,7 +30,8 @@ export class CliAbonService {
     public GetAll() {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
-        return this.http.get<CliAbonModel[]>(this.apiUrl,{ headers: headers }).pipe(tap(data => data),
+        let url = this.apiUrl + "GetAllByEmpre/" + this.data.id_empre;
+        return this.http.get<CliAbonModel[]>(url,{ headers: headers }).pipe(tap(data => data),
             catchError(this.handleError)
         );
     }
@@ -59,6 +60,7 @@ export class CliAbonService {
 
     // Add 
     public Add(clienteModel: CliAbonModel) {
+        clienteModel.id_empre = this.data.id_empre;
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
         return this.http.post<any>(this.apiUrl, clienteModel, { headers: headers })

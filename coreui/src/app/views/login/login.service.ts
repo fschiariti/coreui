@@ -28,9 +28,11 @@ export class LoginService {
             {
                 console.log(data);
 
-                if (data.Token != null)
+                if (data.token != null)
                 {
-                    localStorage.setItem('AdminUser', JSON.stringify({ usuario: loginmodel.Usuario, token: data.Token }));
+                    loginmodel.token = data.token;
+                    loginmodel.id_empre = data.id_empre;
+                    localStorage.setItem('usuario', JSON.stringify(loginmodel));
                     // return true to indicate successful login
                     return data;
                 } else {
@@ -43,7 +45,7 @@ export class LoginService {
     }
 
     LogoutUser() {
-        localStorage.removeItem('currentUser');
+        localStorage.removeItem('usuario');
     }
 
     private handleError(error: HttpErrorResponse) {

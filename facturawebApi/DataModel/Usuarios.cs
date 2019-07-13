@@ -12,11 +12,12 @@ namespace facturawebApi.DataModel
     public class Usuarios
     {
         [Key]
-        public int Id_Usuario { get; set; }
-        public string Usuario { get; set; }
-        public string Email { get; set; }
-        public string Nombre { get; set; }
-        public string Password { get; set; }
+        public int id_usuario { get; set; }
+        public string usuario { get; set; }
+        public string email { get; set; }
+        public string nombre { get; set; }
+        public string password { get; set; }
+        public int id_empre { get; set; }
     }
 
 }

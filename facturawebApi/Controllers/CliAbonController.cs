@@ -56,6 +56,23 @@ namespace facturawebApi.Controllers
             }
         }
 
+        // GET api/CliAbon/57
+        [Route("[action]/{id_empre}")]
+        [HttpGet]
+        public IEnumerable<CliAbonViewModel> GetAllByEmpre(int id_empre)
+        {
+            try
+            {
+                return _cliabon.GetAllByEmpre(id_empre);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
         // POST: api/CliAbon
         [HttpPost]
         public HttpResponseMessage Post([FromBody] CliAbonViewModel cliabonViewModel)

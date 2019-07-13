@@ -9,15 +9,16 @@ namespace facturawebApi.ViewModel
 {
     public class UsuariosViewModel
     {
-        public int Id_Usuario { get; set; }
-
+        public int id_usuario { get; set; }
         [Required]
-        public string Usuario { get; set; }
+        public string usuario { get; set; }
         [Required]
-        public string Password { get; set; }
+        public string password { get; set; }
         [Required]
-        public string Email { get; set; }
+        public string email { get; set; }
         [Required]
-        public string Nombre { get; set; }
+        public string nombre { get; set; }
+        [Required]
+        public int id_empre { get; set; }
     }
 }

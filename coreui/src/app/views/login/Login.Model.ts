@@ -1,6 +1,7 @@
 export class LoginModel
 {
-    public Usuario: string = "";
-    public Password: string = "";
-    public Token: string = "";
+    public usuario: string = "";
+    public password: string = "";
+    public token: string = "";
+    public id_empre: number ;
 }

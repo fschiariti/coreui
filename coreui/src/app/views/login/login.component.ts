@@ -45,8 +45,18 @@ export class LoginComponent implements OnInit
                 if (response != null ) 
                 {
 
-                  this._Route.navigate(['/dashboard']);
-                  this.ngxService.stop(); 
+                  if (response.usuario == this.LoginModel.usuario)  {
+
+                    this._Route.navigate(['/dashboard']);
+                    this.ngxService.stop();   
+                  } 
+                  else
+                  {
+                    alert('usuario inválido');
+                    this._Route.navigate(['/login']);
+                    this.ngxService.stop(); 
+  
+                  }                
 
 
                 } else {

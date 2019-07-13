@@ -12038,23 +12038,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\SCHIARITI\\.nuget\\packages\\": {},
+    "C:\\Users\\Fernando\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\SistPruebas\\facturawebAPI\\facturawebApi\\facturawebApi.csproj",
+      "projectUniqueName": "C:\\SistPruebas\\facturawebapi\\facturawebApi\\facturawebApi.csproj",
       "projectName": "facturawebApi",
-      "projectPath": "C:\\SistPruebas\\facturawebAPI\\facturawebApi\\facturawebApi.csproj",
-      "packagesPath": "C:\\Users\\SCHIARITI\\.nuget\\packages\\",
-      "outputPath": "C:\\SistPruebas\\facturawebAPI\\facturawebApi\\obj\\",
+      "projectPath": "C:\\SistPruebas\\facturawebapi\\facturawebApi\\facturawebApi.csproj",
+      "packagesPath": "C:\\Users\\Fernando\\.nuget\\packages\\",
+      "outputPath": "C:\\SistPruebas\\facturawebapi\\facturawebApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\SCHIARITI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Fernando\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

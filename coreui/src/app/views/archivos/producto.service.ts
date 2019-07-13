@@ -16,7 +16,7 @@ export class ProductoService {
     token: any;
 
     constructor(private http: HttpClient) {
-        this.data = JSON.parse(localStorage.getItem('AdminUser'));
+        this.data = JSON.parse(localStorage.getItem('usuario'));
         this.token = this.data.token;
     }
 
@@ -25,7 +25,8 @@ export class ProductoService {
     public GetAll() {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
-        return this.http.get<ProductoModel[]>(this.apiUrl,{ headers: headers }).pipe(tap(data => data),
+        let url = this.apiUrl + "GetAllByEmpre/" + this.data.id_empre;
+        return this.http.get<ProductoModel[]>(url,{ headers: headers }).pipe(tap(data => data),
             catchError(this.handleError)
         );
     }

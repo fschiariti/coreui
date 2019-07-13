@@ -80,6 +80,33 @@ namespace facturawebApi.Concrete
             return result;
         }
 
+
+        public List<CliAbonViewModel> GetAllByEmpre(int id_empre)
+        {
+            var result = (from cliabon in _context.CliAbon
+                                                   join cliente in _context.Cliente on
+                                                   cliabon.id_cli equals cliente.id_cli
+                                                   join producto in _context.Producto on
+                                                   cliabon.id_prod equals producto.id_prod
+                                                   where cliabon.id_empre == id_empre
+                                                   select new CliAbonViewModel
+                                                   {
+                                                       id_abon = cliabon.id_abon,
+                                                       id_cli = cliente.id_cli,
+                                                       cod_cli = cliente.cod_cli,
+                                                       nombre = cliente.nombre,
+                                                       id_prod = cliabon.id_prod,
+                                                       cod_prod = producto.cod_prod,
+                                                       descrip = producto.descrip,
+                                                       cantidad = cliabon.cantidad,
+                                                       precio = cliabon.precio,
+                                                       iobserv = cliabon.iobserv
+                                                   }).AsQueryable().OrderByDescending(x => x.id_abon).ToList();
+
+            return result;
+        }
+
+
         public CliAbonViewModel GetById(int id)
         {
 
@@ -107,6 +134,9 @@ namespace facturawebApi.Concrete
             return result;
 
         }
+
+
+
 
         public void Insert(CliAbon CliAbon)
         {

@@ -7,7 +7,9 @@ namespace facturawebApi.ViewModel
 { 
     public class LoginResponse
     {
-        public string Usuario { get; set; }
+        public string usuario { get; set; }
         public string Pasword { get; set; }
+        public int id_empre { get; set; }
+
     }
 }

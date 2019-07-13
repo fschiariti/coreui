@@ -15,5 +15,7 @@ namespace facturawebApi.Interface
         bool Delete(int id);
         bool Update(CliAbon cliabon);
         IQueryable<CliAbonViewModel> GetAll();
+        List<CliAbonViewModel> GetAllByEmpre(int id_empre);
+
     }
 }
