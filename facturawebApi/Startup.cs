@@ -80,6 +80,7 @@ namespace facturawebApi
 
 
             services.AddSingleton<IConfiguration>(Configuration);
+            services.AddTransient<IEmpresas, EmpresasConcrete>();
             services.AddTransient<IUsuarios, UsuariosConcrete>();
             services.AddTransient<ICliente, ClienteConcrete>();
             services.AddTransient<ICliAbon, CliAbonConcrete>();

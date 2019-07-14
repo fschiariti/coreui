@@ -13,6 +13,10 @@ namespace facturawebApi.Mappings
     {
         public MappingProfile()
         {
+            CreateMap<EmpresasViewModel, Empresas>()
+                .ForMember(dest => dest.id_empre, opt => opt.MapFrom(src => src.id_empre))
+                .ForMember(dest => dest.des_empre, opt => opt.MapFrom(src => src.des_empre));
+
             CreateMap<UsuariosViewModel, Usuarios>()
                 .ForMember(dest => dest.usuario, opt => opt.MapFrom(src => src.usuario))
                 .ForMember(dest => dest.nombre, opt => opt.MapFrom(src => src.nombre))

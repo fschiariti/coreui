@@ -71,13 +71,16 @@ namespace facturawebApi.Controllers
                         }
                         else
                         {
+                            value.usuario = null;
                             value.password = null;
                             return Ok(value);
                         }
                     }
+                    value.usuario = null;
                     value.password = null;
                     return Ok(value);
                 }
+                value.usuario = null;
                 value.password = null;
                 return Ok(value);
             }

@@ -34,6 +34,10 @@ export class LoginComponent implements OnInit
 
     LoginModel: LoginModel = new LoginModel();
 
+    register() {
+      this._Route.navigate(['/register']);
+    }
+
     onSubmit() 
     {
         this.ngxService.start();
@@ -46,6 +50,7 @@ export class LoginComponent implements OnInit
                 {
 
                   if (response.usuario == this.LoginModel.usuario)  {
+                    localStorage.setItem('usuario', JSON.stringify(this.LoginModel));
 
                     this._Route.navigate(['/dashboard']);
                     this.ngxService.stop();   

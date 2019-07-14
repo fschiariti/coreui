@@ -16,12 +16,14 @@ export class CliAbonService {
     private apiUrl = environment.apiEndpoint + "/api/cliabon/";
     private apiListUrl = environment.apiEndpoint + "/api/compvta/";
     token: any;
+    id_empre: any;
     username: any;
     clienteRow: any;
 
     constructor(private http: HttpClient) {
         this.data = JSON.parse(localStorage.getItem('usuario'));
         this.token = this.data.token;
+        this.id_empre = this.data.id_empre;
         this.clienteRow = new CliAbonModel();
     }
 
@@ -30,7 +32,7 @@ export class CliAbonService {
     public GetAll() {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
-        let url = this.apiUrl + "GetAllByEmpre/" + this.data.id_empre;
+        let url = this.apiUrl + "GetAllByEmpre/" + `${this.id_empre}`;
         return this.http.get<CliAbonModel[]>(url,{ headers: headers }).pipe(tap(data => data),
             catchError(this.handleError)
         );

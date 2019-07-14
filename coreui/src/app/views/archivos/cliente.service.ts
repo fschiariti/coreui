@@ -14,12 +14,14 @@ export class ClienteService {
     private data: any;
     private apiUrl = environment.apiEndpoint + "/api/cliente/";
     token: any;
+    id_empre: any;
     username: any;
     clienteRow: any;
 
     constructor(private http: HttpClient) {
         this.data = JSON.parse(localStorage.getItem('usuario'));
         this.token = this.data.token;
+        this.id_empre = this.data.id_empre;
         this.clienteRow = new ClienteModel();
     }
 
@@ -28,7 +30,7 @@ export class ClienteService {
     public GetAll() {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
-        let url = this.apiUrl + "GetAllByEmpre/"+ this.data.id_empre;
+        let url = this.apiUrl + "GetAllByEmpre/" + `${this.id_empre}`;
         return this.http.get<ClienteModel[]>(url,{ headers: headers }).pipe(tap(data => data),
             catchError(this.handleError)
         );
