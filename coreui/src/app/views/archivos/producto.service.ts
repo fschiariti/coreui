@@ -4,7 +4,9 @@ import { catchError, tap } from 'rxjs/operators'
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ProductoModel } from './producto.Model';
 import { Router } from '@angular/router';
-import{ environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment';
+import { GlobalService } from '../../global.service';
+
 
 @Injectable({
     providedIn: 'root'
@@ -14,10 +16,11 @@ export class ProductoService {
     private data: any;
     private apiUrl = environment.apiEndpoint + "/api/producto/";
     token: any;
+    id_empre: any;
 
-    constructor(private http: HttpClient) {
-        this.data = JSON.parse(localStorage.getItem('usuario'));
-        this.token = this.data.token;
+    constructor(private http: HttpClient, private global: GlobalService) {
+        this.token = this.global.getToken();
+        this.id_empre = this.global.getId_Empre();
     }
 
 
@@ -25,7 +28,7 @@ export class ProductoService {
     public GetAll() {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
-        let url = this.apiUrl + "GetAllByEmpre/" + this.data.id_empre;
+        let url = this.apiUrl + "GetAllByEmpre/" + this.id_empre;
         return this.http.get<ProductoModel[]>(url,{ headers: headers }).pipe(tap(data => data),
             catchError(this.handleError)
         );

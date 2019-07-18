@@ -4,7 +4,8 @@ import { catchError, tap } from 'rxjs/operators'
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { LoginModel } from './Login.Model';
 import { Router } from '@angular/router';
-import{environment} from '../../../environments/environment';
+import { environment} from '../../../environments/environment';
+import { GlobalService } from '../../global.service';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +13,7 @@ import{environment} from '../../../environments/environment';
 
 export class LoginService {
     public token: string;
-    constructor(private _http: HttpClient, private _Route: Router)
+    constructor(private _http: HttpClient, private _Route: Router, public global: GlobalService)
     {
 
     }
@@ -31,12 +32,15 @@ export class LoginService {
                 if (data.token != null)
                 {
                     loginmodel.token = data.token;
-                    loginmodel.id_empre = data.id_empre;
-                    localStorage.setItem('usuario', JSON.stringify(loginmodel));
+                    //Set id_empre of user logged in
+                    this.global.setToken(data.token);
+
+                    this.global.setId_Empre(data.id_empre);
                     // return true to indicate successful login
                     return data;
                 } else {
                     // return false to indicate failed login
+                    this.global.setId_Empre(0);
                     return null;
                 }
             }),

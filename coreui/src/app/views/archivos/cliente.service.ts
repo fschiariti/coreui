@@ -5,6 +5,9 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angul
 import { ClienteModel } from './cliente.Model';
 import { Router } from '@angular/router';
 import{ environment } from '../../../environments/environment';
+import { GlobalService } from '../../global.service';
+
+
 
 @Injectable({
     providedIn: 'root'
@@ -18,10 +21,9 @@ export class ClienteService {
     username: any;
     clienteRow: any;
 
-    constructor(private http: HttpClient) {
-        this.data = JSON.parse(localStorage.getItem('usuario'));
-        this.token = this.data.token;
-        this.id_empre = this.data.id_empre;
+    constructor(private http: HttpClient, private global: GlobalService) {
+        this.token = this.global.getToken();
+        this.id_empre = this.global.getId_Empre();
         this.clienteRow = new ClienteModel();
     }
 
@@ -60,7 +62,7 @@ export class ClienteService {
 
     // Add Role
     public Add(clienteModel: ClienteModel) {
-        clienteModel.id_empre = this.data.id_empre;
+        clienteModel.id_empre = this.id_empre;
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
         return this.http.post<any>(this.apiUrl, clienteModel, { headers: headers })

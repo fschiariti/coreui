@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { LoginModel } from './Login.Model';
 import { LoginService } from './login.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader'; // Import NgxUiLoaderService
+import { GlobalService } from '../../global.service';
+
 
 
 
@@ -27,7 +29,7 @@ export class LoginComponent implements OnInit
     autoHide: number = 2000;
 
 
-    constructor(private _Route: Router, loginservice: LoginService,  private ngxService: NgxUiLoaderService) 
+    constructor(private _Route: Router, loginservice: LoginService,  private ngxService: NgxUiLoaderService, private global: GlobalService) 
     {
         this._loginservice = loginservice;
     }
@@ -50,8 +52,6 @@ export class LoginComponent implements OnInit
                 {
 
                   if (response.usuario == this.LoginModel.usuario)  {
-                    localStorage.setItem('usuario', JSON.stringify(this.LoginModel));
-
                     this._Route.navigate(['/dashboard']);
                     this.ngxService.stop();   
                   } 
