@@ -9,6 +9,7 @@ namespace facturawebApi.ViewModel
     {
         public string usuario { get; set; }
         public string Pasword { get; set; }
+        public string nombre { get; set; }
         public int id_empre { get; set; }
 
     }

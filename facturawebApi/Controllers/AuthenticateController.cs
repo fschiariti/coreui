@@ -65,6 +65,7 @@ namespace facturawebApi.Controllers
                             value.password = null;
                             //set id_empre
                             value.id_empre = userdetails.id_empre;
+                            value.nombre = userdetails.nombre;
 
                             return Ok(value);
 

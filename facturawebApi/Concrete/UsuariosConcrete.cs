@@ -49,6 +49,7 @@ namespace facturawebApi.Concrete
                               select new LoginResponse
                               {
                                   usuario = user.usuario,
+                                  nombre = user.nombre,
                                   id_empre = user.id_empre
                               }).SingleOrDefault();
 

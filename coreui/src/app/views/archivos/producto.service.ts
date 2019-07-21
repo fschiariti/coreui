@@ -15,20 +15,18 @@ import { GlobalService } from '../../global.service';
 export class ProductoService {
     private data: any;
     private apiUrl = environment.apiEndpoint + "/api/producto/";
-    token: any;
-    id_empre: any;
+    usuario: any;
 
     constructor(private http: HttpClient, private global: GlobalService) {
-        this.token = this.global.getToken();
-        this.id_empre = this.global.getId_Empre();
+        this.usuario = this.global.getUsuario();
     }
 
 
     // Get All producto
     public GetAll() {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
-        let url = this.apiUrl + "GetAllByEmpre/" + this.id_empre;
+        headers = headers.append('Authorization', 'Bearer ' + `${this.usuario.token}`);
+        let url = this.apiUrl + "GetAllByEmpre/" + this.usuario.id_empre;
         return this.http.get<ProductoModel[]>(url,{ headers: headers }).pipe(tap(data => data),
             catchError(this.handleError)
         );

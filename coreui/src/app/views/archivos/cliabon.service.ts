@@ -5,8 +5,10 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angul
 import { CliAbonModel } from './cliabon.Model';
 import { CliAbonListModel } from './cliabonList.Model';
 import { Router } from '@angular/router';
-import{ environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { GlobalService } from '../../global.service';
+import { LoginModel } from '../login/Login.Model';
+
 
 
 @Injectable({
@@ -17,23 +19,22 @@ export class CliAbonService {
     private data: any;
     private apiUrl = environment.apiEndpoint + "/api/cliabon/";
     private apiListUrl = environment.apiEndpoint + "/api/compvta/";
-    token: any;
-    id_empre: any;
     username: any;
     clienteRow: any;
+    usuario: any;
 
     constructor(private http: HttpClient, private global: GlobalService) {
-        this.token = this.global.getToken();
-        this.id_empre = this.global.getId_Empre();
         this.clienteRow = new CliAbonModel();
+        this.usuario = new LoginModel();
+        this.usuario = this.global.getUsuario();
     }
 
 
     // Get All 
     public GetAll() {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
-        let url = this.apiUrl + "GetAllByEmpre/" + `${this.id_empre}`;
+        headers = headers.append('Authorization', 'Bearer ' + `${this.usuario.token}`);
+        let url = this.apiUrl + "GetAllByEmpre/" + `${this.usuario.id_empre}`;
         return this.http.get<CliAbonModel[]>(url,{ headers: headers }).pipe(tap(data => data),
             catchError(this.handleError)
         );
@@ -43,7 +44,7 @@ export class CliAbonService {
     public GetById(id_abon) {
         var editUrl = this.apiUrl + id_abon;
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
+        headers = headers.append('Authorization', 'Bearer ' + `${this.usuario.token}`);
         return this.http.get<CliAbonModel>(editUrl,{ headers: headers }).pipe(tap(data =>  data),
             catchError(this.handleError)
         );
@@ -54,7 +55,7 @@ export class CliAbonService {
     public Update(clientemodel: CliAbonModel) {
         var putUrl = this.apiUrl + '/' + clientemodel.id_abon;
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
+        headers = headers.append('Authorization', 'Bearer ' + `${this.usuario.token}`);
         return this.http.put<any>(putUrl, clientemodel, { headers: headers })
             .pipe(
                 catchError(this.handleError)
@@ -63,9 +64,9 @@ export class CliAbonService {
 
     // Add 
     public Add(clienteModel: CliAbonModel) {
-        clienteModel.id_empre = this.id_empre;
+        clienteModel.id_empre = this.usuario.id_empre;
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
+        headers = headers.append('Authorization', 'Bearer ' + `${this.usuario.token}`);
         return this.http.post<any>(this.apiUrl, clienteModel, { headers: headers })
             .pipe(
                 catchError(this.handleError)
@@ -75,7 +76,7 @@ export class CliAbonService {
     // AddList
     public AddList(cliabonList:  CliAbonListModel[]) {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
+        headers = headers.append('Authorization', 'Bearer ' + `${this.usuario.token}`);
         return this.http.post<any>(this.apiListUrl, cliabonList, { headers: headers })
             .pipe(
                 catchError(this.handleError)
@@ -87,7 +88,7 @@ export class CliAbonService {
     public Delete(id_abon) {
         var deleteUrl = this.apiUrl + '/' + id_abon;
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        headers = headers.append('Authorization', 'Bearer ' + `${this.token}`);
+        headers = headers.append('Authorization', 'Bearer ' + `${this.usuario.token}`);
         return this.http.delete<any>(deleteUrl, { headers: headers })
             .pipe(
                 catchError(this.handleError)

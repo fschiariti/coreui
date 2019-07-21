@@ -31,16 +31,15 @@ export class LoginService {
 
                 if (data.token != null)
                 {
-                    loginmodel.token = data.token;
                     //Set id_empre of user logged in
-                    this.global.setToken(data.token);
+                    this.global.setUsuario(data);
 
-                    this.global.setId_Empre(data.id_empre);
+                    //this.global.setId_Empre(data.id_empre);
                     // return true to indicate successful login
                     return data;
                 } else {
                     // return false to indicate failed login
-                    this.global.setId_Empre(0);
+                    this.global.setUsuario(null);
                     return null;
                 }
             }),
