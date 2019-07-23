@@ -4,9 +4,9 @@ import { catchError, tap } from 'rxjs/operators'
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ClienteModel } from './cliente.Model';
 import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment';
-import { GlobalService } from '../../global.service';
-import { LoginModel } from '../login/Login.Model';
+import { environment } from '../../../../environments/environment';
+import { GlobalService } from '../../../global.service';
+import { LoginModel } from '../../login/Login.Model';
 
 
 

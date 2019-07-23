@@ -77,6 +77,30 @@ namespace facturawebApi.Concrete
             return result;
         }
 
+        public List<HVentaViewModel> GetAllByEmpre(int id_empre)
+        {
+            var result = (from HVenta in _context.HVenta
+                                                  join iventa in _context.IVenta on
+                                                  HVenta.id_comp equals iventa.id_comp
+                                                  join cliente in _context.Cliente on
+                                                  HVenta.id_cli equals cliente.id_cli
+                                                  where cliente.id_empre == id_empre
+                                                  select new HVentaViewModel
+                                                  {
+                                                      id_comp = HVenta.id_comp,
+                                                      id_cli = cliente.id_cli,
+                                                      cod_cli = cliente.cod_cli,
+                                                      nombre = cliente.nombre,
+                                                      imp_tot = HVenta.imp_tot,
+                                                      referencia = HVenta.referencia,
+                                                      observ = HVenta.observ
+                                                  }).AsQueryable().OrderByDescending(x => x.id_comp).ToList();
+
+            return result;
+        }
+
+
+
         public HVentaViewModel GetById(Int64 id)
         {
 

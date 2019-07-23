@@ -4,11 +4,11 @@ import { DOCUMENT } from '@angular/common';
 import { MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
 import { CliAbonModel } from './cliabon.Model';
 import { CliAbonService } from './cliabon.service';
-import { ProductoModel } from './producto.Model';
-import { ProductoService } from './producto.service';
-import { ClienteModel } from './cliente.Model';
+import { ProductoModel } from '../producto/producto.Model';
+import { ProductoService } from '../producto/producto.service';
+import { ClienteModel } from '../cliente/cliente.Model';
 import { CliAbonListModel } from './cliabonList.Model';
-import { ClienteService } from './cliente.service';
+import { ClienteService } from '../cliente/cliente.service';
 import * as XLSX from 'xlsx';
 import { NgxUiLoaderService } from 'ngx-ui-loader'; // Import NgxUiLoaderService
 import { Observable} from 'rxjs';
@@ -157,7 +157,7 @@ export class CliAbonComponent  implements OnInit {
   }
 
 
-  addList() {
+  procesar() {
     console.log(this.CliAbonList);
 
     let lote = new Array();

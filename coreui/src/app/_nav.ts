@@ -54,6 +54,15 @@ export const navItems: NavData[] = [
     icon: 'icon-drop'
   },
   {
+    title: true,
+    name: 'Ventas'
+  },
+  {
+    name: 'Facturas',
+    url: '/archivos/facturas',
+    icon: 'icon-drop'
+  },
+  {
     name: 'Base',
     url: '/base',
     icon: 'icon-puzzle',

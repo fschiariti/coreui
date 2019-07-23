@@ -6,10 +6,10 @@
       <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
       </mat-form-field>
-      <button class="btn" (click)="nuevo()"><i class="fa fa-file"></i></button>
-      <button class="btn" (click)="addList()"><i class="fa fa-play"></i></button>
-      <button class="btn" (click)="eliminar()"><i class="fa fa-trash-o"></i></button>
-      <button class="btn" (click)="ExportTOExcel()"><i class="fa fa-file-excel-o"></i></button>     
+      <button title="Nuevo" class="btn" (click)="nuevo()"><i class="fa fa-file"></i></button>
+      <button title="Procesar" class="btn" (click)="procesar()"><i class="fa fa-play"></i></button>
+      <button title="Eliminar" class="btn" (click)="eliminar()"><i class="fa fa-trash-o"></i></button>
+      <button title="Exportar a Excel" class="btn" (click)="ExportTOExcel()"><i class="fa fa-file-excel-o"></i></button>     
     </div>
   </li>
 </div>

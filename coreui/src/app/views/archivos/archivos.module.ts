@@ -12,10 +12,11 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgxUiLoaderModule } from  'ngx-ui-loader';
 
 //Archivos components
-import { CliAbonComponent } from './cliabon.component';
-import { ClienteComponent } from './cliente.component';
-import { ClienteValidationFormsComponent } from './cliente.Validation.component';
-import { CliAbonValidationFormsComponent } from './cliabon.Validation.component';
+import { CliAbonComponent } from '../archivos/cliabon/cliabon.component';
+import { ClienteComponent } from '../archivos/cliente/cliente.component';
+import { FacturasComponent } from '../archivos/facturas/facturas.component';
+import { ClienteValidationFormsComponent } from '../archivos/cliente/cliente.Validation.component';
+import { CliAbonValidationFormsComponent } from '../archivos/cliabon/cliabon.Validation.component';
 
 
 
@@ -34,6 +35,7 @@ import { CliAbonValidationFormsComponent } from './cliabon.Validation.component'
   declarations: [
     ClienteComponent,
     CliAbonComponent,
+    FacturasComponent,
     ClienteValidationFormsComponent,
     CliAbonValidationFormsComponent
   ],

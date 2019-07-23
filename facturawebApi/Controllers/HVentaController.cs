@@ -56,6 +56,24 @@ namespace facturawebApi.Controllers
             }
         }
 
+        // GET api/HVenta/57
+        [Route("[action]/{id_empre}")]
+        [HttpGet]
+        public IEnumerable<HVentaViewModel> GetAllByEmpre(int id_empre)
+        {
+            try
+            {
+                return _HVenta.GetAllByEmpre(id_empre);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
+
         // POST: api/HVenta
         [HttpPost]
         public HttpResponseMessage Post([FromBody] HVentaViewModel HVentaViewModel)

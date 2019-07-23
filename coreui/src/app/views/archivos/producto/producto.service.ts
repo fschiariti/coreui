@@ -4,8 +4,8 @@ import { catchError, tap } from 'rxjs/operators'
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ProductoModel } from './producto.Model';
 import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment';
-import { GlobalService } from '../../global.service';
+import { environment } from '../../../../environments/environment';
+import { GlobalService } from '../../../global.service';
 
 
 @Injectable({

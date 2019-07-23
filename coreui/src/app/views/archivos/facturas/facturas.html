@@ -1,0 +1,81 @@
+<ngx-ui-loader></ngx-ui-loader>
+
+<div class="breadcrumb">
+  <li class="breadcrumb-menu">
+    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
+      </mat-form-field>
+      <button title="Nuevo" class="btn" (click)="nuevo()"><i class="fa fa-file"></i></button>
+      <button title="Procesar" class="btn" (click)="procesar()"><i class="fa fa-play"></i></button>
+      <button title="Eliminar" class="btn" (click)="eliminar()"><i class="fa fa-trash-o"></i></button>
+      <button title="Exportar a Excel" class="btn" (click)="ExportTOExcel()"><i class="fa fa-file-excel-o"></i></button>     
+    </div>
+  </li>
+</div>
+<div class="card-body">
+  <div class="mat-elevation-z8" #TABLE>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" 
+    #table class="mat-elevation-z8 table table-striped table-sm">
+
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                        [aria-label]="checkboxLabel()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)"
+                        [aria-label]="checkboxLabel(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- nombre Column -->
+      <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let element">    
+          <!--/.row-->
+            <div class="col-sm-12">
+              <div>
+                <div class="text-uppercase text-muted">
+                  <div>
+                    <span class="badge badge-pill badge-success">{{element.fecha}}</span>
+                  </div>
+                  <div>
+                    <span class="badge badge-danger">{{element.cod_cli}}</span>
+                  </div>
+                  <div>
+                      <span>{{element.nombre}}</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="text text-muted">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <span class="float-right" style="font-weight:bold">Total: {{element.imp_tot | number:'1.0-0'}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!--/.col-->
+          </td>
+       </ng-container>
+            
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></tr>
+    </table>
+    <mat-paginator [pageSize]="20" [pageSizeOptions]="[20, 50, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>
+
+

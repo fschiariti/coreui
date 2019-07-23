@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ClienteComponent } from './cliente.component';
-import { CliAbonComponent } from './cliabon.component';
+import { ClienteComponent } from './cliente/cliente.component';
+import { CliAbonComponent } from './cliabon/cliabon.component';
+import { FacturasComponent } from './facturas/facturas.component';
 
 const routes: Routes = [
   {
@@ -24,8 +25,16 @@ const routes: Routes = [
         data: {
           title: 'Abonos'
         }
-      }
-    ]
+      },
+      {
+        path: 'facturas',
+        component: FacturasComponent,
+        data: {
+          title: 'Facturas'
+        }
+      },
+    ],    
+
   }
 ];
 

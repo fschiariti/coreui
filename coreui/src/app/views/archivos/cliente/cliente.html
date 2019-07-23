@@ -6,9 +6,9 @@
       <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
       </mat-form-field>
-      <button tooltip="Nuevo" class="btn" place (click)="nuevo()"><i class="fa fa-file"></i></button>
-      <button tooltip="Eliminar" class="btn" (click)="eliminar()"><i class="fa fa-trash-o"></i></button>
-      <button tooltip="Exportal a Excel" class="btn" (click)="ExportTOExcel()"><i
+      <button title="Nuevo" class="btn" place (click)="nuevo()"><i class="fa fa-file"></i></button>
+      <button title="Eliminar" class="btn" (click)="eliminar()"><i class="fa fa-trash-o"></i></button>
+      <button title="Exportal a Excel" class="btn" (click)="ExportTOExcel()"><i
           class="fa fa-file-excel-o"></i></button>
     </div>
   </li>

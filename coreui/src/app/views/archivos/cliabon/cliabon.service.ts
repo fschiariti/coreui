@@ -5,9 +5,9 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angul
 import { CliAbonModel } from './cliabon.Model';
 import { CliAbonListModel } from './cliabonList.Model';
 import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment';
-import { GlobalService } from '../../global.service';
-import { LoginModel } from '../login/Login.Model';
+import { environment } from '../../../../environments/environment';
+import { GlobalService } from '../../../global.service';
+import { LoginModel } from '../../login/Login.Model';
 
 
 

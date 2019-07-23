@@ -1,18 +1,17 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl, FormGroupName} from '@angular/forms';
+import {FormGroup, FormBuilder, Validators, FormControl, AbstractControl, FormGroupName} from '@angular/forms';
 
 import { ValidatorFn, ValidationErrors } from '@angular/forms';
-import { ValidationFormsService } from './cliabon.Validation.service';
-import { FormsComponent} from '../base/forms.component';
-
+import { ValidationFormsService } from './cliente.Validation.service';
+import {FormsComponent} from '../../base/forms.component';
 
 @Component({
-  templateUrl: '../forms/validation-forms/validation-forms.component.html',
-  styleUrls: ['../forms/validation-forms/validation-forms.component.css'],
+  templateUrl: '../../forms/validation-forms/validation-forms.component.html',
+  styleUrls: ['../../forms/validation-forms/validation-forms.component.css'],
   providers: [ ValidationFormsService ]
 })
 
-export class CliAbonValidationFormsComponent {
+export class ClienteValidationFormsComponent {
   simpleForm: FormGroup;
   submitted = false;
   formErrors: any;
@@ -31,7 +30,7 @@ export class CliAbonValidationFormsComponent {
     this.simpleForm = this.fb.group({
       cantidad: ['', [Validators.required]],
       precio: ['', [Validators.required]],
-      id_prod: ['', [Validators.required]],
+      id_prod: ['', [Validators.required]]
     });
   }
 
