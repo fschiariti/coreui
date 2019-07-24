@@ -15,6 +15,7 @@ import { NgxUiLoaderModule } from  'ngx-ui-loader';
 import { CliAbonComponent } from '../archivos/cliabon/cliabon.component';
 import { ClienteComponent } from '../archivos/cliente/cliente.component';
 import { FacturasComponent } from '../archivos/facturas/facturas.component';
+import { FacturasPrintComponent } from '../archivos/facturas/facturasprint.component';
 import { ClienteValidationFormsComponent } from '../archivos/cliente/cliente.Validation.component';
 import { CliAbonValidationFormsComponent } from '../archivos/cliabon/cliabon.Validation.component';
 
@@ -36,6 +37,7 @@ import { CliAbonValidationFormsComponent } from '../archivos/cliabon/cliabon.Val
     ClienteComponent,
     CliAbonComponent,
     FacturasComponent,
+    FacturasPrintComponent,
     ClienteValidationFormsComponent,
     CliAbonValidationFormsComponent
   ],

@@ -1,0 +1,112 @@
+<script src="../../../../../node_modules/jspdf/dist/jspdf.debug.js"></script>
+
+<div class="col-sm-6 col-md-12">
+  <div class="card">
+    <div class="card-header">
+      <input type="button" value="Imprimir" class="btn btn-default" (click)="captureScreen()" />
+      <input type="button" value="Volver" class="btn btn-default"  [routerLink]="['/archivos/facturas']"/>
+    </div>
+    <div class="card-body">
+      <div style="margin-top:20px;" id="print">
+        <form #f="ngForm" novalidate (ngSubmit)="onSubmit()">
+          <div style="margin-top:20px;"  class="row">
+            <div class="col-xs-6 col-sm-6 col-md-12">
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-12">
+                  <h1><strong>Coral Software</strong></h1>
+                  <hr>
+                  <h6>Factura</h6>
+                  <hr>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-12">
+                  <p>
+                    <b>Name :- </b> <em>xxx</em>
+                  </p>
+      
+                  <address>
+      
+                    <br>
+                    <em> <strong>From :- </strong>xx</em>
+                    <br>
+                    <em> <strong>To :- </strong> xxx </em>
+                    <br>
+      
+                  </address>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-12 text-right">
+                  <p>
+                    <em><strong>Date:</strong> xxxx</em>
+                  </p>
+                  <p>
+                    <em> <strong>MemberId </strong> #: xxx</em>
+                  </p>
+                  <p>
+                    <em> <strong>Next Renewal date</strong> #: xxxx</em>
+                  </p>
+                </div>
+              </div>
+              <div class="row">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Srno.</th>
+                      <th style="text-align: center">Scheme</th>
+                      <th style="text-align: center">Plan</th>
+                      <th class="text-center"></th>
+                      <th class="text-center">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="col-md-1"><em>1</em>
+                      </td>
+                      <td class="col-md-5" style="text-align: center"> xxxx </td>
+                      <td class="col-md-4" style="text-align: center"> xxxx </td>
+                      <td class="col-md-1 text-center"></td>
+                      <td class="col-md-1 text-center">xxxxxx</td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td class="text-right">
+                        <p>
+                          <strong>Subtotal:</strong>
+                        </p>
+                        <p>
+                          <strong>Tax:</strong>
+                        </p>
+                      </td>
+                      <td class="text-center">
+                        <p>
+                          <strong>100</strong>
+                        </p>
+                        <p>
+                          <strong>21</strong>
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td class="text-right">
+                        <h4><strong>Total:</strong></h4>
+                      </td>
+                      <td class="text-center text-danger">
+                        <h4><strong>121</strong></h4>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div><!--/.col-->
+
+
+
