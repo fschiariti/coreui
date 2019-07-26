@@ -90,10 +90,12 @@ namespace facturawebApi.Concrete
                                                       id_comp = HVenta.id_comp,
                                                       id_cli = cliente.id_cli,
                                                       cod_cli = cliente.cod_cli,
+                                                      fecha = HVenta.fecha,
                                                       nombre = cliente.nombre,
                                                       imp_tot = HVenta.imp_tot,
                                                       referencia = HVenta.referencia,
-                                                      observ = HVenta.observ
+                                                      observ = HVenta.observ,
+                                                      id_empre = HVenta.id_empre
                                                   }).AsQueryable().OrderByDescending(x => x.id_comp).ToList();
 
             return result;
@@ -109,17 +111,37 @@ namespace facturawebApi.Concrete
                           HVenta.id_comp equals iventa.id_comp
                           join cliente in _context.Cliente on
                           HVenta.id_cli equals cliente.id_cli
+                          where HVenta.id_comp == id
                           select new HVentaViewModel
                           {
                               id_comp = HVenta.id_comp,
                               id_cli = cliente.id_cli,
                               cod_cli = cliente.cod_cli,
+                              fecha = HVenta.fecha,
                               nombre = cliente.nombre,
                               imp_tot = HVenta.imp_tot,
                               referencia = HVenta.referencia,
-                              observ = HVenta.observ
+                              observ = HVenta.observ,
+                              id_empre = HVenta.id_empre
                           }).FirstOrDefault();
 
+            var items = (from IVenta in _context.IVenta
+                          join producto in _context.Producto on
+                          IVenta.id_prod equals producto.id_prod
+                          where IVenta.id_comp == id
+                          select new IVentaViewModel
+                          {
+                              id_comp = IVenta.id_comp,
+                              id_prod = producto.id_prod,
+                              cod_prod = producto.cod_prod,
+                              descrip = producto.descrip,
+                              cantidad = IVenta.cantidad,
+                              precio = IVenta.precio,
+                              iobserv = IVenta.iobserv
+                          }).ToList();
+
+
+            result.items = items;
 
             return result;
 

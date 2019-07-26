@@ -15,55 +15,40 @@
                 <div class="col-xs-6 col-sm-6 col-md-12">
                   <h1><strong>Coral Software</strong></h1>
                   <hr>
-                  <h6>Factura</h6>
+                  <h6>Factura</h6><em>{{facturasModel.id_comp}}</em>
                   <hr>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-12">
                   <p>
-                    <b>Name :- </b> <em>xxx</em>
+                    <em><strong>Fecha:</strong>{{facturasModel.fecha}}</em>
+                    <b>Codigo: </b> <em>{{facturasModel.cod_cli}}</em>
+                    <b>Nombre: </b> <em>{{facturasModel.nombre}}</em>
                   </p>
-      
-                  <address>
-      
-                    <br>
-                    <em> <strong>From :- </strong>xx</em>
-                    <br>
-                    <em> <strong>To :- </strong> xxx </em>
-                    <br>
-      
-                  </address>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-12 text-right">
-                  <p>
-                    <em><strong>Date:</strong> xxxx</em>
-                  </p>
-                  <p>
-                    <em> <strong>MemberId </strong> #: xxx</em>
-                  </p>
-                  <p>
-                    <em> <strong>Next Renewal date</strong> #: xxxx</em>
-                  </p>
                 </div>
               </div>
               <div class="row">
                 <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>Srno.</th>
-                      <th style="text-align: center">Scheme</th>
-                      <th style="text-align: center">Plan</th>
-                      <th class="text-center"></th>
+                      <th>Cod.</th>
+                      <th style="text-align: center">Descrip</th>
+                      <th style="text-align: center">Cantidad</th>
+                      <th class="text-center">Precio</th>
                       <th class="text-center">Total</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="col-md-1"><em>1</em>
+                    <tr *ngFor="let x of facturasModel.items">
+                      <td class="col-md-1"><em>{{x.cod_prod}}</em>
                       </td>
-                      <td class="col-md-5" style="text-align: center"> xxxx </td>
-                      <td class="col-md-4" style="text-align: center"> xxxx </td>
-                      <td class="col-md-1 text-center"></td>
-                      <td class="col-md-1 text-center">xxxxxx</td>
+                      <td class="col-md-5" style="text-align: center"> {{x.descrip}} </td>
+                      <td class="col-md-4" style="text-align: center"> {{x.cantidad}} </td>
+                      <td class="col-md-1 text-center">{{x.precio}}</td>
+                      <td class="col-md-1 text-center">{{x.cantidad * x.precio}}</td>
+                    </tr>                    
+                    <tr>
                     </tr>
                     <tr>
                       <td></td>
@@ -74,7 +59,7 @@
                           <strong>Subtotal:</strong>
                         </p>
                         <p>
-                          <strong>Tax:</strong>
+                          <strong>Iva:</strong>
                         </p>
                       </td>
                       <td class="text-center">
@@ -94,7 +79,7 @@
                         <h4><strong>Total:</strong></h4>
                       </td>
                       <td class="text-center text-danger">
-                        <h4><strong>121</strong></h4>
+                        <h4><strong>{{facturasModel.imp_tot}}</strong></h4>
                       </td>
                     </tr>
                   </tbody>
@@ -107,6 +92,3 @@
     </div>
   </div>
 </div><!--/.col-->
-
-
-

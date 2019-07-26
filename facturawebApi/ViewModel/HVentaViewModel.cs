@@ -17,5 +17,7 @@ namespace facturawebApi.ViewModel
         public string referencia { get; set; }
         public int? id_empre { get; set; }
 
+        public List<IVentaViewModel> items { get; set; }
+
     }
 }

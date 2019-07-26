@@ -2,25 +2,51 @@ import { Component, OnInit } from '@angular/core';
 import * as jsPDF from 'jspdf'
 import html2canvas from 'html2canvas';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FacturasPrintService } from './facturasprint.service';
+import { FacturasModel } from './facturas.Model';
+import { NgxUiLoaderService } from 'ngx-ui-loader'; // Import NgxUiLoaderService
+
+
 
 @Component({
-    templateUrl: './facturasprint.html',
-    styleUrls: [
-    ]
+    selector: 'facturas',
+    styleUrls: [],
+    templateUrl: 'facturasprint.html'
 })
 
 export class FacturasPrintComponent implements OnInit {
-    private _generateRecepit;
+
+    private _facturasPrintService;
+    facturasModel: FacturasModel= new FacturasModel();
     errorMessage: any;
-    today :any;
-    
+
+    constructor(private _Route: Router, private _routeParams: ActivatedRoute, 
+        facturasPrintService: FacturasPrintService, private ngxService: NgxUiLoaderService) {
+
+        this._facturasPrintService = facturasPrintService;
+
+    }
+
     ngOnInit(): void 
     {
-
+       this.getData();
     }
 
-    constructor(private _Route: Router, private _routeParams: ActivatedRoute) {
+
+    getData() 
+    {
+      this.ngxService.start();
+      this._facturasPrintService.GetById(10025).subscribe(
+          info => {
+                this.facturasModel  = info;
+                this.ngxService.stop(); 
+            },
+          error => this.errorMessage = <any>error
+      );
+  
     }
+  
+
 
     public captureScreen() 
     {
@@ -37,10 +63,9 @@ export class FacturasPrintComponent implements OnInit {
             let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
             var position = 0;
             pdf.addImage(contentDataURL, 'PNG', 20, 20, imgWidth, imgHeight)
-            pdf.save('PaymentRecepit.pdf'); // Generated PDF 
+            pdf.save('factura.pdf'); // Generated PDF 
 
         });
     }
-
 
 }
