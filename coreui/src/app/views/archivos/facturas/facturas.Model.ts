@@ -6,6 +6,7 @@ export class FacturasModel
     public cod_cli: string = "";
     public nombre: string = "";
     public imp_tot: string = "" ;
+    public id_empre: number = 0 ;
     public items: [];
 
 }

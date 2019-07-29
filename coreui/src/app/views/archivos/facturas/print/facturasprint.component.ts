@@ -3,7 +3,7 @@ import * as jsPDF from 'jspdf'
 import html2canvas from 'html2canvas';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FacturasPrintService } from './facturasprint.service';
-import { FacturasModel } from './facturas.Model';
+import { FacturasModel } from '../facturas.Model';
 import { NgxUiLoaderService } from 'ngx-ui-loader'; // Import NgxUiLoaderService
 
 
@@ -15,20 +15,20 @@ import { NgxUiLoaderService } from 'ngx-ui-loader'; // Import NgxUiLoaderService
 })
 
 export class FacturasPrintComponent implements OnInit {
-
+    private id_comp = 0;
     private _facturasPrintService;
     facturasModel: FacturasModel= new FacturasModel();
     errorMessage: any;
 
     constructor(private _Route: Router, private _routeParams: ActivatedRoute, 
         facturasPrintService: FacturasPrintService, private ngxService: NgxUiLoaderService) {
-
         this._facturasPrintService = facturasPrintService;
 
     }
 
     ngOnInit(): void 
     {
+       this.id_comp = this._routeParams.snapshot.params['id_comp'];
        this.getData();
     }
 
@@ -36,7 +36,7 @@ export class FacturasPrintComponent implements OnInit {
     getData() 
     {
       this.ngxService.start();
-      this._facturasPrintService.GetById(10025).subscribe(
+      this._facturasPrintService.GetById(this.id_comp).subscribe(
           info => {
                 this.facturasModel  = info;
                 this.ngxService.stop(); 

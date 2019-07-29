@@ -3,8 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ClienteComponent } from './cliente/cliente.component';
 import { CliAbonComponent } from './cliabon/cliabon.component';
-import { FacturasComponent } from './facturas/facturas.component';
-import { FacturasPrintComponent } from './facturas/facturasprint.component';
+import { FacturasComponent } from './facturas/list/facturas.component';
+import { FacturasPrintComponent } from './facturas/print/facturasprint.component';
+import { FacturasEditComponent } from './facturas/edit/edit.component';
 
 const routes: Routes = [
   {
@@ -35,10 +36,17 @@ const routes: Routes = [
         }
       },
       {
-        path: 'facturasprint',
+        path: 'facturas/print/:id_comp',
         component: FacturasPrintComponent,
         data: {
-          title: 'FacturasPrint'
+          title: 'Facturas / Imprimir:id_comp'
+        }
+      },
+      {
+        path: 'facturas/edit/:id_comp',
+        component: FacturasEditComponent,
+        data: {
+          title: 'Facturas / Editar:id_comp'
         }
       }
     ]    

@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs'
 import { catchError, tap } from 'rxjs/operators'
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { FacturasModel } from './facturas.Model';
+import { FacturasModel } from '../facturas.Model';
 import { Router } from '@angular/router';
-import { environment } from '../../../../environments/environment';
-import { GlobalService } from '../../../global.service';
-import { LoginModel } from '../../login/Login.Model';
+import { environment } from '../../../../../environments/environment';
+import { GlobalService } from '../../../../global.service';
+import { LoginModel } from '../../../login/Login.Model';
 
 
 

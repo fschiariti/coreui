@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs'
 import { catchError, tap } from 'rxjs/operators'
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { FacturasModel } from './facturas.Model';
+import { FacturasModel } from '../facturas.Model';
 import { Router } from '@angular/router';
-import { environment } from '../../../../environments/environment';
-import { GlobalService } from '../../../global.service';
-import { LoginModel } from '../../login/Login.Model';
+import { environment } from '../../../../../environments/environment';
+import { GlobalService } from '../../../../global.service';
+import { LoginModel } from '../../../login/Login.Model';
 
 
 
@@ -14,7 +14,7 @@ import { LoginModel } from '../../login/Login.Model';
     providedIn: 'root'
 })
 
-export class FacturasPrintService {
+export class FacturasEditService {
     private apiUrl = environment.apiEndpoint + "/api/hventa/";
     row: any;
     usuario: any;
@@ -34,6 +34,30 @@ export class FacturasPrintService {
             catchError(this.handleError)
         );
     }
+
+
+  // Update
+    public Update(facturamodel: FacturasModel) {
+    var putUrl = this.apiUrl + '/' + facturamodel.id_comp;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    headers = headers.append('Authorization', 'Bearer ' + `${this.usuario.token}`);
+    return this.http.put<any>(putUrl, facturamodel, { headers: headers })
+        .pipe(
+            catchError(this.handleError)
+        );
+    }
+
+    // Add 
+    public Add(facturaModel: FacturasModel) {
+    facturaModel.id_empre = this.usuario.id_empre;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    headers = headers.append('Authorization', 'Bearer ' + `${this.usuario.token}`);
+    return this.http.post<any>(this.apiUrl, facturaModel, { headers: headers })
+        .pipe(
+            catchError(this.handleError)
+        );
+    }
+
 
 
 

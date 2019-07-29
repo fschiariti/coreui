@@ -3,14 +3,15 @@
 <div class="breadcrumb">
   <li class="breadcrumb-menu">
     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-      <mat-form-field>
+<!--      <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
       </mat-form-field>
       <button title="Nuevo" class="btn" (click)="nuevo()"><i class="fa fa-file"></i></button>
       <button title="Procesar" class="btn" (click)="procesar()"><i class="fa fa-play"></i></button>
       <button title="Eliminar" class="btn" (click)="eliminar()"><i class="fa fa-trash-o"></i></button>
       <button title="Exportar a Excel" class="btn" (click)="ExportTOExcel()"><i class="fa fa-file-excel-o"></i></button> 
-      <button title="Imprimir" class="btn"  [routerLink]="['/archivos/facturasprint']"><i class="fa fa-print"></i></button> 
+      <button title="Imprimir" class="btn"  [routerLink]="['/archivos/facturasprint/,12345']"><i class="fa fa-print"></i></button> -->
+      <button title="Imprimir" class="btn" (click)="imprimir()"><i class="fa fa-print"></i></button> 
     </div>
   </li>
 </div>

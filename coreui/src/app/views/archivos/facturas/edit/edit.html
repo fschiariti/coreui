@@ -1,0 +1,121 @@
+<ngx-ui-loader></ngx-ui-loader>
+
+<div class="col-sm-6 col-md-12">
+  <div class="card">
+      <div class="footer">
+      </div>
+  
+
+    <div class="card-header">
+      <button type="button" class="btn" (click)="onSubmit()">
+        <span class="btn btn-success">Guardar</span>
+      </button>
+      <button type="button" class="btn"  [routerLink]="['/archivos/facturas']">
+        <span class="btn btn-danger">Volver</span>
+      </button>
+    </div>    
+    <div class="card-body">
+      <form [formGroup]="simpleForm"  novalidate (ngSubmit)="onSubmit()" class="needs-validation">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <mat-form-field >
+                <input type="text" panelWidth ="1000" displayWidth ="1000" class="form-control" [(ngModel)]="FacturasModel.cod_cli" 
+                placeholder="Seleccione cliente" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto"
+                formControlName="cod_cli"  
+                [ngClass]="{ 'is-invalid': submitted && f.cod_cli.errors , 
+                'is-valid': f.cod_cli.touched && !f.cod_cli.errors }"/>
+                <mat-autocomplete #auto="matAutocomplete" 
+                (optionSelected)='getNombre($event.option.value)' >
+                  <mat-option *ngFor="let tabCliSearch of filteredClis | async" 
+                  [value]="tabCliSearch.cod_cli" >
+                    <span>{{tabCliSearch.cod_cli}}</span> |
+                      <small>{{tabCliSearch.nombre}}</small> |
+                      (<span>{{tabCliSearch.id_cli}}</span>) 
+                      {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+          </div>      
+        </div>           
+
+        <div class="row">
+          <div class="col-sm-8">
+              <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" name="nombre" id="nombre" [(ngModel)]="FacturasModel.nombre" 
+                formControlName="nombre"
+                disabled />
+              </div>
+            </div>    
+        </div>
+      </form>
+      
+      <div class="mat-elevation-z8" #TABLE>
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" 
+        #table class="mat-elevation-z8 table table-striped table-sm">
+    
+          <!-- Checkbox Column -->
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()"
+                            [aria-label]="checkboxLabel()">
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null"
+                            [checked]="selection.isSelected(row)"
+                            [aria-label]="checkboxLabel(row)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
+    
+          <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+    
+          <!-- nombre Column -->
+          <ng-container matColumnDef="nombre">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+              <td mat-cell *matCellDef="let element">    
+              <!--/.row-->
+                <div class="col-sm-12">
+                  <div>
+                    <div class="text-uppercase text-muted">
+                      <div>
+                        <span>{{element.cod_prod}}</span>
+                      </div>
+                      <div>
+                        <span class="badge badge-danger">{{element.descrip}}</span>
+                      </div>
+                      <div>
+                          <span>{{element.cantidad}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="text text-muted">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <span class="float-right" style="font-weight:bold">Total: {{element.precio | number:'1.0-0'}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div><!--/.col-->
+              </td>
+           </ng-container>
+                
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></tr>
+        </table>
+        <mat-paginator [pageSize]="20" [pageSizeOptions]="[20, 50, 100]" showFirstLastButtons></mat-paginator>
+      </div>
+    
+      
+    </div>
+  </div>
+</div>

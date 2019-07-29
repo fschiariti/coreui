@@ -2,7 +2,7 @@ import { SelectionModel} from '@angular/cdk/collections';
 import { Component, OnInit, Inject, ViewChild, Input, ElementRef,  ChangeDetectorRef} from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
-import { FacturasModel } from './facturas.Model';
+import { FacturasModel } from '../facturas.Model';
 import { FacturasService } from './facturas.service';
 import * as XLSX from 'xlsx';
 import { NgxUiLoaderService } from 'ngx-ui-loader'; // Import NgxUiLoaderService
@@ -10,6 +10,8 @@ import { Observable} from 'rxjs';
 import { map, startWith} from 'rxjs/operators';
 import { ModalDirective} from 'ngx-bootstrap/modal';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl, FormGroupName} from '@angular/forms';
+import { Router } from '@angular/router';
+
 
 
 
@@ -45,7 +47,7 @@ export class FacturasComponent  implements OnInit {
 
 
   constructor(@Inject(DOCUMENT) private _document: any, facturasService: FacturasService, 
-  private changeDetectorRefs: ChangeDetectorRef, private ngxService: NgxUiLoaderService) {
+  private changeDetectorRefs: ChangeDetectorRef, private _Route: Router, private ngxService: NgxUiLoaderService) {
 
     this._facturasService = facturasService;
     this.facturasList = [];
@@ -88,6 +90,16 @@ export class FacturasComponent  implements OnInit {
 
   refresh() {
     this.genGrid();
+  }
+
+
+  imprimir() {
+    let x = this.selection.selected;
+    this.ngxService.start();
+
+    x.forEach(element => {
+      this._Route.navigate(['/archivos/facturas/print/',element.id_comp]);      
+    });  
   }
 
 
@@ -149,4 +161,12 @@ export class FacturasComponent  implements OnInit {
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id_comp + 1}`;
   }
+
+  selectRow(row) {
+    //alert(JSON.stringify(row));
+    this._Route.navigate(['/archivos/facturas/edit/', row.id_comp]);      
+
+  }
+
 }
+
