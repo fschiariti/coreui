@@ -8,9 +8,10 @@ using facturawebApi.DataModel;
 using facturawebApi.Interface;
 using Microsoft.AspNetCore.Authorization;
 using facturawebApi.ViewModel;
+using facturawebApi.Common;
 using System.Net;
 using System.Net.Http;
-
+using Microsoft.Extensions.Configuration;
 
 namespace facturawebApi.Controllers
 {
@@ -18,12 +19,17 @@ namespace facturawebApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class ClienteController : ControllerBase
+
+
     {
+        private readonly IConfiguration _config;
+
         private readonly ICliente _cliente;
 
-        public ClienteController(ICliente cliente)
+        public ClienteController(ICliente cliente, IConfiguration config)
         {
             _cliente = cliente;
+            _config = config;
         }
 
         // GET api/Cliente
@@ -33,6 +39,7 @@ namespace facturawebApi.Controllers
             try
             {
                 return _cliente.GetAll();
+
             }
             catch (Exception)
             {
@@ -95,6 +102,11 @@ namespace facturawebApi.Controllers
         public HttpResponseMessage Post([FromBody] ClienteViewModel clienteViewModel)
         {
 
+            Email email = new Email(_config);
+
+            email.Send("fernando.schiariti@gmail.com", "body", "subject");
+
+
             try
             {
                 if (ModelState.IsValid)
@@ -105,6 +117,8 @@ namespace facturawebApi.Controllers
                         {
                             StatusCode = HttpStatusCode.Conflict
                         };
+
+
 
                         return response;
                     }

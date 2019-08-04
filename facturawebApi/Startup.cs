@@ -57,6 +57,10 @@ namespace facturawebApi
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
 
+            // Add our Config object so it can be injected
+            var emailSettingsSection = Configuration.GetSection("EmailSettings");
+            services.Configure<AppSettings>(emailSettingsSection);
+
             // configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
