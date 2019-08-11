@@ -19,6 +19,19 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="form-group">
+              <label for="fecha">Fecha</label>
+              <input type="text"
+              class="form-control"
+              [minDate]="minDate"
+              [maxDate]="maxDate"
+              #dp="bsDatepicker"
+              bsDatepicker [(bsValue)]="bsValue">    
+            </div>
+          </div>
+        </div>  
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
               <mat-form-field >
                 <input type="text" panelWidth ="1000" displayWidth ="1000" class="form-control" [(ngModel)]="FacturasModel.cod_cli" 
                 placeholder="Seleccione cliente" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto"
@@ -41,7 +54,7 @@
         </div>           
 
         <div class="row">
-          <div class="col-sm-8">
+          <div class="col-sm-12">
               <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <input type="text" class="form-control" name="nombre" id="nombre" [(ngModel)]="FacturasModel.nombre" 
@@ -51,7 +64,11 @@
             </div>    
         </div>
       </form>
-      
+
+      <button type="button" class="btn" (click)="newItem()">
+        <span class="btn btn-success">Agregar</span>
+      </button>
+
       <div class="mat-elevation-z8" #TABLE>
         <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" 
         #table class="mat-elevation-z8 table table-striped table-sm">
@@ -116,6 +133,77 @@
       </div>
     
       
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="showModal">
+  <div _ngcontent-bix-c1="" aria-hidden="false" aria-labelledby="myModalLabel" bsmodal="" 
+  class="modal fade in show" role="dialog" tabindex="-99999999999" aria-modal="true" 
+  style="display: block; overflow-y: scroll;">
+      <div class="modal-dialog" >
+        <div class="modal-content modal-info" role="document">
+          <div class="modal-header">
+            <h5 class="modal-title">Editar</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form  novalidate (ngSubmit)="onSubmit()" class="needs-validation">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label for="id_prod">Producto</label>
+                    <select  name="id_prod" class="form-control"  
+                      required [(ngModel)]="ItemsModel.id_prod" >
+                      <option value=''>-Seleccione Producto-</option>
+                      <option *ngFor="let prod of ProductoList" [ngValue]="prod.id_prod">
+                        {{prod.descrip}}
+                      </option>
+                    </select>            
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label for="cantidad">Cantidad</label>
+                    <input type="text" class="form-control" name="cantidad" id="cantidad" [(ngModel)]="ItemsModel.cantidad" required/>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label for="precio">Precio</label>
+                    <input type="text" class="form-control" name="precio" id="precio" [(ngModel)]="ItemsModel.precio" />
+                  </div>
+                </div>
+              </div>
+          
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label for="iobserv">Observacion</label>
+                    <input type="text" class="form-control" name="iobserv" id="iobserv" [(ngModel)]="ItemsModel.iobserv" >
+                  </div>
+                </div>
+              </div>
+            </form>          
+          </div>
+        <div class="modal-footer">
+            <button type="button" class="btn" (click)="guardarItem()">
+              <span class="btn btn-success">Guardar</span>
+            </button>
+            <button type="button" class="btn" (click)="closeModal()">
+              <span class="btn btn-danger">Cancelar</span>
+            </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

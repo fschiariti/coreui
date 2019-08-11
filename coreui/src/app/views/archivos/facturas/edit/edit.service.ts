@@ -38,24 +38,24 @@ export class FacturasEditService {
 
   // Update
     public Update(facturamodel: FacturasModel) {
-    var putUrl = this.apiUrl + '/' + facturamodel.id_comp;
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    headers = headers.append('Authorization', 'Bearer ' + `${this.usuario.token}`);
-    return this.http.put<any>(putUrl, facturamodel, { headers: headers })
-        .pipe(
-            catchError(this.handleError)
-        );
+        var putUrl = this.apiUrl + "/" + facturamodel.id_comp;
+        let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        headers = headers.append('Authorization', 'Bearer ' + `${this.usuario.token}`);
+        return this.http.put<any>(putUrl, facturamodel, { headers: headers })
+            .pipe(
+                catchError(this.handleError)
+            );
     }
 
     // Add 
     public Add(facturaModel: FacturasModel) {
-    facturaModel.id_empre = this.usuario.id_empre;
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    headers = headers.append('Authorization', 'Bearer ' + `${this.usuario.token}`);
-    return this.http.post<any>(this.apiUrl, facturaModel, { headers: headers })
-        .pipe(
-            catchError(this.handleError)
-        );
+        var postUrl = this.apiUrl;
+        let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        headers = headers.append('Authorization', 'Bearer ' + `${this.usuario.token}`);
+        return this.http.post<any>(postUrl, facturaModel, { headers: headers })
+            .pipe(
+                catchError(this.handleError)
+            );
     }
 
 

@@ -28,6 +28,34 @@ namespace facturawebApi.Controllers
             _IVenta = IVenta;
         }
 
+        [Route("[action]")]
+        // POST: api/HVenta
+        [HttpPost]
+        public HttpResponseMessage PostComprob([FromBody] CompVtaViewModel comp)
+        {
+
+            var hventa = AutoMapper.Mapper.Map<HVenta>(comp);
+            Int64 id_comp = _HVenta.Insert(hventa);
+
+            foreach (IVentaViewModel item in comp.items)
+            {
+                item.id_comp = id_comp;
+                var iventa = AutoMapper.Mapper.Map<IVenta>(item);
+                _IVenta.Insert(iventa);
+
+            }
+
+            var response = new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.OK
+            };
+
+            return response;
+
+        }
+
+
+
 
         // POST: api/HVenta
         [HttpPost]

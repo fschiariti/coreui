@@ -1,3 +1,5 @@
+import { ItemsModel } from './items.Model';
+
 export class FacturasModel
 {
     public id_comp: number = 0 ;
@@ -5,8 +7,8 @@ export class FacturasModel
     public fecha: Date;
     public cod_cli: string = "";
     public nombre: string = "";
-    public imp_tot: string = "" ;
+    public imp_tot: number = 0 ;
     public id_empre: number = 0 ;
-    public items: [];
+    public items: ItemsModel[];
 
 }

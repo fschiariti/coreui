@@ -1,5 +1,7 @@
 // Angular
 import { CommonModule } from '@angular/common';
+import {IOption} from 'ng-select';
+
 import { NgModule } from '@angular/core';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -21,6 +23,10 @@ import { ClienteValidationFormsComponent } from '../archivos/cliente/cliente.Val
 import { CliAbonValidationFormsComponent } from '../archivos/cliabon/cliabon.Validation.component';
 import { FacturasEditValidationFormsComponent } from '../archivos/facturas/edit/edit.Validation.component';
 
+// Datepicker
+import { BsDatepickerModule } from 'ngx-bootstrap';
+
+
 
 
 
@@ -33,7 +39,9 @@ import { FacturasEditValidationFormsComponent } from '../archivos/facturas/edit/
     ModalModule.forRoot(),
     FormsModule,
     NgxUiLoaderModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BsDatepickerModule.forRoot(),
+
   ],
   declarations: [
     ClienteComponent,

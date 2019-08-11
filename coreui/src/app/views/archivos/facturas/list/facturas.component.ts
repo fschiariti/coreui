@@ -102,6 +102,9 @@ export class FacturasComponent  implements OnInit {
     });  
   }
 
+  add() {
+      this._Route.navigate(['/archivos/facturas/edit/',0]);      
+  }
 
   eliminar() {
     if (confirm('Confirma?')) {

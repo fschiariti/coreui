@@ -1,10 +1,13 @@
 import { SelectionModel} from '@angular/cdk/collections';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,  ChangeDetectorRef, ViewEncapsulation   } from '@angular/core';
 import * as jsPDF from 'jspdf'
 import html2canvas from 'html2canvas';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FacturasEditService } from './edit.service';
+import { ProductoService } from '../../producto/producto.service';
+import { ProductoModel } from '../../producto/producto.Model';
 import { FacturasModel } from '../facturas.Model';
+import { ItemsModel } from '../items.Model';
 import { NgxUiLoaderService } from 'ngx-ui-loader'; // Import NgxUiLoaderService
 import { MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl, FormGroupName} from '@angular/forms';
@@ -16,19 +19,28 @@ import { ClienteService } from '../../cliente/cliente.service';
 
 
 
+
 @Component({
     selector: 'edit',
-    styleUrls: [],
+    styleUrls: [
+      '../../../../../scss/vendors/bs-datepicker/bs-datepicker.scss',
+      '../../../../../scss/vendors/ng-select/ng-select.scss'
+    ],
     templateUrl: 'edit.html',
-    providers: [ ValidationFormsService ]
+    providers: [ ValidationFormsService ],
+    encapsulation: ViewEncapsulation.None
+
 })
 
 export class FacturasEditComponent implements OnInit {
     private id_comp = 0;
     private _facturasEditService;
     private _clienteService;
+    private _productoService;
     FacturasModel: FacturasModel= new FacturasModel();
+    ItemsModel: ItemsModel= new ItemsModel();
     ClienteList: ClienteModel[];
+    ProductoList: ProductoModel[];
     errorMessage: any;
     dataSource: any;
     displayedColumns: string[] = ['select','nombre'];
@@ -36,20 +48,26 @@ export class FacturasEditComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     simpleForm: FormGroup;
     submitted = false;
+    showModal = false;
     ClienteModel: ClienteModel= new ClienteModel();
     selection = new SelectionModel<FacturasModel>(true, []);
+    minDate = new Date(2017, 5, 10);
+    maxDate = new Date(2030, 9, 15);
+  
+    bsValue: Date = new Date();
 
 
     constructor(private _Route: Router, private _routeParams: ActivatedRoute, ClienteService: ClienteService,
-        facturasEditService: FacturasEditService, private ngxService: NgxUiLoaderService,
-        private fb: FormBuilder,  public vf: ValidationFormsService) {
+        FacturasEditService: FacturasEditService, ProductoService: ProductoService, private changeDetectorRefs: ChangeDetectorRef, 
+        private ngxService: NgxUiLoaderService, private fb: FormBuilder,  public vf: ValidationFormsService) {
            
-        this._facturasEditService = facturasEditService;
+        this._facturasEditService = FacturasEditService;
         this._clienteService = ClienteService;
+        this._productoService = ProductoService;
         this.ClienteList = [];
-        
-
-            
+        this.ProductoList = [];
+        this.FacturasModel.items= [];
+                 
         this.filteredClis = this.myControl.valueChanges
         .pipe(
         startWith(''),
@@ -64,6 +82,7 @@ export class FacturasEditComponent implements OnInit {
     {
        this.id_comp = this._routeParams.snapshot.params['id_comp'];
        this.getCliente();
+       this.getProducto();
        this.getData();
     }
 
@@ -89,19 +108,35 @@ export class FacturasEditComponent implements OnInit {
     getData() 
     {
       this.ngxService.start();
-      this._facturasEditService.GetById(this.id_comp).subscribe(
+      if (this.id_comp > 0 ){
+
+        this._facturasEditService.GetById(this.id_comp).subscribe(
           info => {
-                this.FacturasModel = info
+                this.FacturasModel = info;
                 this.dataSource = new MatTableDataSource(this.FacturasModel.items);
                 this.dataSource.sort = this.sort;
                 this.dataSource.paginator = this.paginator;
                 this.ngxService.stop(); 
-                this.ngxService.stop(); 
+            },
+          error => this.errorMessage = <any>error
+        );
+      }  
+    }
+
+    getProducto() 
+    {
+      this.ngxService.start();
+      this._productoService.GetAll().subscribe(
+          allprod => {
+              this.ProductoList = allprod
+              console.log(this.ProductoList);
+              this.ngxService.stop(); 
             },
           error => this.errorMessage = <any>error
       );
   
     }
+  
 
     // On Submit
     onSubmit() {
@@ -130,27 +165,29 @@ export class FacturasEditComponent implements OnInit {
         //
 
         if (this.FacturasModel.id_comp != 0) {
-        this.ngxService.start();
-        this._facturasEditService.Update(this.FacturasModel).subscribe(
-            cliabon => {
-                console.log(cliabon);
-                this.refresh();
-                this.ngxService.stop();
-            },
-            error => this.errorMessage = <any>error
-        );
+          this.ngxService.start();
+          this._facturasEditService.Update(this.FacturasModel).subscribe(
+              resp => {
+                  console.log(resp);
+                  this.refresh();
+                  this.ngxService.stop();
+              },
+              error => this.errorMessage = <any>error
+          );
+          console.log(this.FacturasModel);
     
         } else {
-        this.ngxService.start();
-        this._facturasEditService.Add(this.FacturasModel).subscribe(
-            data => {
-                console.log(data);
-                this.ngxService.stop();
-            },
-            error => this.errorMessage = <any>error
-        );  
-        }
-        console.log(this.FacturasModel);
+          this.ngxService.start();
+          this._facturasEditService.Add(this.FacturasModel).subscribe(
+              data => {
+                  console.log(data);
+                  this.ngxService.stop();
+              },
+              error => this.errorMessage = <any>error
+          );  
+          }
+          console.log(this.FacturasModel);
+          this._Route.navigate(['/archivos/facturas']);
     }
 
     cancel() {
@@ -199,8 +236,8 @@ export class FacturasEditComponent implements OnInit {
     
     createForm() {
         this.simpleForm = this.fb.group({
-        cod_cli: ['', [Validators.required]],
-        nombre: ['', [Validators.required]]
+        cod_cli: ['', [Validators.required]]
+  //      nombre: ['', [Validators.required]]
         });
     }
 
@@ -231,5 +268,38 @@ export class FacturasEditComponent implements OnInit {
       );
     }
   
+    selectRow(row) {
+        this.ItemsModel.id_item = row.id_item;
+        this.ItemsModel.id_prod =  row.id_prod;
+        this.ItemsModel.cantidad =  row.cantidad;
+        this.ItemsModel.precio =  row.precio;
+        this.ItemsModel.iobserv =  row.iobserv;
+        console.log(this.ItemsModel);
+        error => this.errorMessage = <any>error
+    
+        console.log(row);
+        this.showModal = true;
+    }
+
+    newItem() {
+      this.ItemsModel.id_item = 0;
+      this.ItemsModel.id_prod =  0;
+      this.ItemsModel.cantidad =  1;
+      this.ItemsModel.precio =  0;
+      this.ItemsModel.iobserv =  "";
+      this.showModal = true;
+    }
+
+    closeModal() {
+      this.showModal = false;
+    }
+
+    
+    guardarItem() {
+      this.FacturasModel.items.push(this.ItemsModel);
+      this.dataSource = [...this.FacturasModel.items];
+      this.showModal = false;
+
+    }
 
 }
