@@ -90,23 +90,21 @@ namespace facturawebApi.Concrete
         public List<HVentaViewModel> GetAllByEmpre(int id_empre)
         {
             var result = (from HVenta in _context.HVenta
-                                                  join iventa in _context.IVenta on
-                                                  HVenta.id_comp equals iventa.id_comp
-                                                  join cliente in _context.Cliente on
-                                                  HVenta.id_cli equals cliente.id_cli
-                                                  where cliente.id_empre == id_empre
-                                                  select new HVentaViewModel
-                                                  {
-                                                      id_comp = HVenta.id_comp,
-                                                      id_cli = cliente.id_cli,
-                                                      cod_cli = cliente.cod_cli,
-                                                      fecha = HVenta.fecha,
-                                                      nombre = cliente.nombre,
-                                                      imp_tot = HVenta.imp_tot,
-                                                      referencia = HVenta.referencia,
-                                                      observ = HVenta.observ,
-                                                      id_empre = HVenta.id_empre
-                                                  }).AsQueryable().OrderByDescending(x => x.id_comp).ToList();
+                        join cliente in _context.Cliente on
+                        HVenta.id_cli equals cliente.id_cli
+                        where cliente.id_empre == id_empre
+                        select new HVentaViewModel
+                        {
+                            id_comp = HVenta.id_comp,
+                            id_cli = cliente.id_cli,
+                            cod_cli = cliente.cod_cli,
+                            fecha = HVenta.fecha,
+                            nombre = cliente.nombre,
+                            imp_tot = HVenta.imp_tot,
+                            referencia = HVenta.referencia,
+                            observ = HVenta.observ,
+                            id_empre = HVenta.id_empre
+                        }).AsQueryable().OrderByDescending(x => x.id_comp).ToList();
 
             return result;
         }
@@ -141,6 +139,7 @@ namespace facturawebApi.Concrete
                           where IVenta.id_comp == id
                           select new IVentaViewModel
                           {
+                              id_item = IVenta.id_item,
                               id_comp = IVenta.id_comp,
                               id_prod = producto.id_prod,
                               cod_prod = producto.cod_prod,
@@ -170,6 +169,7 @@ namespace facturawebApi.Concrete
         public bool Update(HVenta HVenta)
         {
             _context.Entry(HVenta).Property(x => x.id_cli).IsModified = true;
+            _context.Entry(HVenta).Property(x => x.fecha).IsModified = true;
             _context.Entry(HVenta).Property(x => x.imp_tot).IsModified = true;
             _context.Entry(HVenta).Property(x => x.referencia).IsModified = true;
             _context.Entry(HVenta).Property(x => x.observ).IsModified = true;

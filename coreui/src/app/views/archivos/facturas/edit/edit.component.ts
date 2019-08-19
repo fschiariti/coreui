@@ -43,7 +43,7 @@ export class FacturasEditComponent implements OnInit {
     ProductoList: ProductoModel[];
     errorMessage: any;
     dataSource: any;
-    displayedColumns: string[] = ['select','nombre'];
+    displayedColumns: string[] = ['select','cod_prod','descrip', 'cantidad', 'precio'];
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     simpleForm: FormGroup;
@@ -236,8 +236,9 @@ export class FacturasEditComponent implements OnInit {
     
     createForm() {
         this.simpleForm = this.fb.group({
-        cod_cli: ['', [Validators.required]]
-  //      nombre: ['', [Validators.required]]
+        cod_cli: ['', [Validators.required]],        
+        fecha: ['', [Validators.required]],
+        nombre: ['', [Validators.required]]
         });
     }
 
@@ -269,6 +270,8 @@ export class FacturasEditComponent implements OnInit {
     }
   
     selectRow(row) {
+        this.ItemsModel = new ItemsModel;
+        this.ItemsModel.index = row.index;
         this.ItemsModel.id_item = row.id_item;
         this.ItemsModel.id_prod =  row.id_prod;
         this.ItemsModel.cantidad =  row.cantidad;
@@ -282,7 +285,15 @@ export class FacturasEditComponent implements OnInit {
     }
 
     newItem() {
-      this.ItemsModel.id_item = 0;
+      this.ItemsModel = new ItemsModel;
+
+      if (this.FacturasModel.items.length == 0) {
+        this.ItemsModel.index = 1;
+        this.ItemsModel.id_item = 0;
+      } else {
+        this.ItemsModel.index = 1 + Math.max.apply(Math,  this.FacturasModel.items.map(function(o) { return  o.index; }));
+        this.ItemsModel.id_item = 0;
+      }
       this.ItemsModel.id_prod =  0;
       this.ItemsModel.cantidad =  1;
       this.ItemsModel.precio =  0;
@@ -296,10 +307,49 @@ export class FacturasEditComponent implements OnInit {
 
     
     guardarItem() {
-      this.FacturasModel.items.push(this.ItemsModel);
+      this.getDescrip(this.ItemsModel.id_prod);
+
+      let index = this.FacturasModel.items.findIndex(req => req.index === this.ItemsModel.index);
+      if (index == -1) {
+        this.FacturasModel.items.push(this.ItemsModel);
+      } else {
+        this.FacturasModel.items[index] = this.ItemsModel;
+      }
+
       this.dataSource = [...this.FacturasModel.items];
       this.showModal = false;
-
     }
 
-}
+    getNombre(cod_cli) {
+
+      if (!cod_cli) return cod_cli;
+  
+      if (typeof this.ClienteList != 'undefined') {
+        let index = this.ClienteList.findIndex(req => req.cod_cli === cod_cli);
+        if (index == -1) {
+          this.FacturasModel.nombre = '';
+        } else {
+          this.FacturasModel.nombre = this.ClienteList[index].nombre;
+        }
+    
+      }
+    }
+
+    getDescrip(id_prod) {
+
+      if (!id_prod) return id_prod;
+  
+      if (typeof this.ProductoList != 'undefined') {
+        let index = this.ProductoList.findIndex(req => req.id_prod === id_prod);
+        if (index == -1) {
+          this.ItemsModel.cod_prod = '';
+          this.ItemsModel.descrip = '';
+        } else {
+          this.ItemsModel.cod_prod = this.ProductoList[index].cod_prod;
+          this.ItemsModel.descrip = this.ProductoList[index].descrip;
+        }
+    
+      }
+    }
+
+  }

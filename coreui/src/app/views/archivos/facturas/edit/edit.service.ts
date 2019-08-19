@@ -37,11 +37,12 @@ export class FacturasEditService {
 
 
   // Update
-    public Update(facturamodel: FacturasModel) {
-        var putUrl = this.apiUrl + "/" + facturamodel.id_comp;
+    public Update(facturaModel: FacturasModel) {
+        facturaModel.id_empre = this.usuario.id_empre;
+        var putUrl = this.apiUrl + "/" + facturaModel.id_comp;
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         headers = headers.append('Authorization', 'Bearer ' + `${this.usuario.token}`);
-        return this.http.put<any>(putUrl, facturamodel, { headers: headers })
+        return this.http.put<any>(putUrl, facturaModel, { headers: headers })
             .pipe(
                 catchError(this.handleError)
             );
@@ -49,6 +50,7 @@ export class FacturasEditService {
 
     // Add 
     public Add(facturaModel: FacturasModel) {
+        facturaModel.id_empre = this.usuario.id_empre;
         var postUrl = this.apiUrl;
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         headers = headers.append('Authorization', 'Bearer ' + `${this.usuario.token}`);

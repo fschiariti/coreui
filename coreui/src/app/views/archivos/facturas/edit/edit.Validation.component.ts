@@ -30,7 +30,8 @@ export class FacturasEditValidationFormsComponent {
   createForm() {
     this.simpleForm = this.fb.group({
       cod_cli: ['', [Validators.required]],
-      nombre: ['', [Validators.required]]
+      nombre: ['', [Validators.required]],
+      fecha: ['', [Validators.required]],
     });
   }
 

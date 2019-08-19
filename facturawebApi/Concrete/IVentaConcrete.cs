@@ -25,9 +25,19 @@ namespace facturawebApi.Concrete
             _configuration = configuration;
         }
 
-        public bool CheckExists(Int64 id)
+        public bool CheckExists(Int64 Id)
         {
-            return false;
+            var data = (from IVenta in _context.IVenta
+                        where IVenta.id_item == Id
+                        select IVenta).FirstOrDefault();
+
+            if (data != null)
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
         }
 
         public bool Delete(Int64 Id)

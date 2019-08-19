@@ -51,7 +51,7 @@
               <div>
                 <div class="text-uppercase text-muted">
                   <div>
-                    <span>{{element.fecha}}</span>
+                    <span>{{ element.fecha | date:'dd/MM/yyyy' }}</span>
                   </div>
                   <div>
                     <span class="badge badge-danger">{{element.cod_cli}}</span>

@@ -16,13 +16,17 @@ export class ValidationFormsService {
 
   formErrors = {
     cod_cli: '',
-    nombre: ''
+    nombre: '',
+    fecha: ''
   };
 
   constructor() {
     this.errorMessages = {
       cod_cli: {
         required: 'Codigo de cliente requerido',
+      },
+      fecha: {
+        required: 'Fecha requerida',
       },
       nombre: {
         required: 'Cantidad requerida',

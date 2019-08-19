@@ -83,41 +83,50 @@ namespace facturawebApi.Controllers
         public HttpResponseMessage Post([FromBody] HVentaViewModel HVentaViewModel)
         {
 
+            Int64 id_comp;
+
             try
             {
                 if (ModelState.IsValid)
                 {
                     if (_HVenta.CheckExists(HVentaViewModel.id_comp))
                     {
-                        var response = new HttpResponseMessage()
-                        {
-                            StatusCode = HttpStatusCode.Conflict
-                        };
 
-                        return response;
+                        var temp = AutoMapper.Mapper.Map<HVenta>(HVentaViewModel);
+
+                        _HVenta.Update(temp);
+                        id_comp = temp.id_comp;
                     }
                     else
                     {
                         var temp = AutoMapper.Mapper.Map<HVenta>(HVentaViewModel);
 
-                        Int64 id_comp = _HVenta.Insert(temp);
+                        id_comp = _HVenta.Insert(temp);
+                    }
 
-                        foreach (IVentaViewModel item in HVentaViewModel.items)
+                    foreach (IVentaViewModel item in HVentaViewModel.items)
+                    {
+                        item.id_comp = id_comp;
+                        item.id_empre = HVentaViewModel.id_empre;
+                        var iventa = AutoMapper.Mapper.Map<IVenta>(item);
+
+                        if (_IVenta.CheckExists(item.id_item))
                         {
-                            item.id_comp = id_comp;
-                            var iventa = AutoMapper.Mapper.Map<IVenta>(item);
+                            _IVenta.Update(iventa);
+                        } else
+                        {
                             _IVenta.Insert(iventa);
-
                         }
 
-                        var response = new HttpResponseMessage()
-                        {
-                            StatusCode = HttpStatusCode.OK
-                        };
-
-                        return response;
-
                     }
+
+                    var response = new HttpResponseMessage()
+                    {
+                        StatusCode = HttpStatusCode.OK
+                    };
+
+                    return response;
+
                 }
                 else
                 {
@@ -135,47 +144,60 @@ namespace facturawebApi.Controllers
 
                 throw;
             }
+
+
+
         }
 
         // PUT: api/HVenta/5
         [HttpPut("{id}")]
         public HttpResponseMessage Put(int id, [FromBody] HVentaViewModel HVentaViewModel)
         {
+            Int64 id_comp;
+
             try
             {
                 if (ModelState.IsValid)
                 {
                     if (_HVenta.CheckExists(HVentaViewModel.id_comp))
                     {
-                        var response = new HttpResponseMessage()
-                        {
-                            StatusCode = HttpStatusCode.Conflict
-                        };
 
-                        return response;
+                        var temp = AutoMapper.Mapper.Map<HVenta>(HVentaViewModel);
+
+                        _HVenta.Update(temp);
+                        id_comp = temp.id_comp;
                     }
                     else
                     {
                         var temp = AutoMapper.Mapper.Map<HVenta>(HVentaViewModel);
 
-                        Int64 id_comp = _HVenta.Insert(temp);
+                        id_comp = _HVenta.Insert(temp);
+                    }
 
-                        foreach (IVentaViewModel item in HVentaViewModel.items)
+                    foreach (IVentaViewModel item in HVentaViewModel.items)
+                    {
+                        item.id_comp = id_comp;
+                        item.id_empre = HVentaViewModel.id_empre;
+                        var iventa = AutoMapper.Mapper.Map<IVenta>(item);
+
+                        if (_IVenta.CheckExists(item.id_item))
                         {
-                            item.id_comp = id_comp;
-                            var iventa = AutoMapper.Mapper.Map<IVenta>(item);
+                            _IVenta.Update(iventa);
+                        }
+                        else
+                        {
                             _IVenta.Insert(iventa);
-
                         }
 
-                        var response = new HttpResponseMessage()
-                        {
-                            StatusCode = HttpStatusCode.OK
-                        };
-
-                        return response;
-
                     }
+
+                    var response = new HttpResponseMessage()
+                    {
+                        StatusCode = HttpStatusCode.OK
+                    };
+
+                    return response;
+
                 }
                 else
                 {

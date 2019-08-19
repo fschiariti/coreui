@@ -15,7 +15,7 @@
       </button>
     </div>    
     <div class="card-body">
-      <form [formGroup]="simpleForm"  novalidate (ngSubmit)="onSubmit()" class="needs-validation">
+      <form [formGroup]="simpleForm"   novalidate (ngSubmit)="onSubmit()" class="needs-validation">
         <div class="row">
           <div class="col-sm-12">
             <div class="form-group">
@@ -25,7 +25,11 @@
               [minDate]="minDate"
               [maxDate]="maxDate"
               #dp="bsDatepicker"
-              bsDatepicker [(bsValue)]="bsValue">    
+              formControlName="fecha"
+              name="fecha" 
+              id="fecha"
+              [(bsValue)]="FacturasModel.fecha" value="{{ FacturasModel.fecha | date:'dd/MM/yyyy' }}"
+              bsDatepicker  [(ngModel)]="FacturasModel.fecha">    
             </div>
           </div>
         </div>  
@@ -95,37 +99,26 @@
                 The actual rendered columns are set as a property on the row definition" -->
     
           <!-- nombre Column -->
-          <ng-container matColumnDef="nombre">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-              <td mat-cell *matCellDef="let element">    
-              <!--/.row-->
-                <div class="col-sm-12">
-                  <div>
-                    <div class="text-uppercase text-muted">
-                      <div>
-                        <span>{{element.cod_prod}}</span>
-                      </div>
-                      <div>
-                        <span class="badge badge-danger">{{element.descrip}}</span>
-                      </div>
-                      <div>
-                          <span>{{element.cantidad}}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="text text-muted">
-                      <div class="row">
-                        <div class="col-sm-12">
-                          <span class="float-right" style="font-weight:bold">Total: {{element.precio | number:'1.0-0'}}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div><!--/.col-->
-              </td>
-           </ng-container>
-                
+          <ng-container matColumnDef="cod_prod">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Codigo</th>
+            <td mat-cell *matCellDef="let element"> {{element.cod_prod}} </td>   
+          </ng-container>
+
+          <ng-container matColumnDef="descrip">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Descrip</th>
+              <td mat-cell *matCellDef="let element"> {{element.descrip}} </td>   
+          </ng-container>
+
+          <ng-container matColumnDef="cantidad">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Cantidad</th>
+            <td mat-cell *matCellDef="let element"> {{element.cantidad}} </td>   
+          </ng-container>
+        
+          <ng-container matColumnDef="precio">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
+            <td mat-cell *matCellDef="let element"> {{element.precio}} </td>   
+          </ng-container>
+
           <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></tr>
         </table>
