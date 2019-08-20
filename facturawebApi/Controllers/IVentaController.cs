@@ -56,6 +56,25 @@ namespace facturawebApi.Controllers
             }
         }
 
+
+        // GET: api/IVenta/GetItemsById
+        [Route("[action]/{id_comp}")]
+        [HttpGet]
+
+        public IEnumerable<IVentaViewModel> GetItemsById(Int64 id)
+        {
+            try
+            {
+                return _IVenta.GetItemsById(id);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
         // POST: api/IVenta
         [HttpPost]
         public HttpResponseMessage Post([FromBody] IVentaViewModel IVentaViewModel)

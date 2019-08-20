@@ -85,6 +85,32 @@ namespace facturawebApi.Concrete
             return result;
         }
 
+        public List<IVentaViewModel> GetItemsById(Int64 id)
+        {
+
+            var result = (from IVenta in _context.IVenta
+                         join producto in _context.Producto on
+                         IVenta.id_prod equals producto.id_prod
+                         where IVenta.id_comp == id
+                         select new IVentaViewModel
+                         {
+                             id_item = IVenta.id_item,
+                             id_comp = IVenta.id_comp,
+                             id_prod = producto.id_prod,
+                             cod_prod = producto.cod_prod,
+                             descrip = producto.descrip,
+                             cantidad = IVenta.cantidad,
+                             precio = IVenta.precio,
+                             iobserv = IVenta.iobserv
+                         }).ToList();
+
+
+            return result;
+
+        }
+
+
+
         public IVentaViewModel GetById(Int64 id)
         {
 

@@ -120,6 +120,39 @@ namespace facturawebApi.Controllers
 
                     }
 
+                    //Elimino los eliminados de la grilla
+
+                    List<IVentaViewModel> items = _IVenta.GetItemsById(id_comp);
+
+                    foreach (IVentaViewModel item in items)
+                    {
+                        bool containsItem = HVentaViewModel.items.Any(x => x.id_item == item.id_item);
+
+                        if (!containsItem)
+                        {
+                            _IVenta.Delete(item.id_item);
+                        }
+                    }
+
+                    //Agrego los items nuevos o actualizo
+
+                    foreach (IVentaViewModel item in HVentaViewModel.items)
+                    {
+                        item.id_comp = id_comp;
+                        item.id_empre = HVentaViewModel.id_empre;
+                        var iventa = AutoMapper.Mapper.Map<IVenta>(item);
+
+                        if (_IVenta.CheckExists(item.id_item))
+                        {
+                            _IVenta.Update(iventa);
+                        }
+                        else
+                        {
+                            _IVenta.Insert(iventa);
+                        }
+
+                    }
+
                     var response = new HttpResponseMessage()
                     {
                         StatusCode = HttpStatusCode.OK
@@ -174,6 +207,22 @@ namespace facturawebApi.Controllers
                         id_comp = _HVenta.Insert(temp);
                     }
 
+                    //Elimino los eliminados de la grilla
+
+                    List<IVentaViewModel> items = _IVenta.GetItemsById(id_comp);
+
+                    foreach (IVentaViewModel item in items)
+                    {
+                        bool containsItem = HVentaViewModel.items.Any(x => x.id_item == item.id_item);
+
+                        if (!containsItem)
+                        {
+                            _IVenta.Delete(item.id_item);
+                        }
+                    }
+
+                    //Agrego los items nuevos o actualizo
+
                     foreach (IVentaViewModel item in HVentaViewModel.items)
                     {
                         item.id_comp = id_comp;
@@ -190,6 +239,7 @@ namespace facturawebApi.Controllers
                         }
 
                     }
+
 
                     var response = new HttpResponseMessage()
                     {

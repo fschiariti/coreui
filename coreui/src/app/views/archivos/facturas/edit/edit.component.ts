@@ -50,7 +50,7 @@ export class FacturasEditComponent implements OnInit {
     submitted = false;
     showModal = false;
     ClienteModel: ClienteModel= new ClienteModel();
-    selection = new SelectionModel<FacturasModel>(true, []);
+    selection = new SelectionModel<ItemsModel>(true, []);
     minDate = new Date(2017, 5, 10);
     maxDate = new Date(2030, 9, 15);
   
@@ -224,11 +224,11 @@ export class FacturasEditComponent implements OnInit {
     }
 
     /** The label for the checkbox on the passed row */
-    checkboxLabel(row?: FacturasModel): string {
+    checkboxLabel(row?: ItemsModel): string {
         if (!row) {
         return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
         }
-        return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id_comp + 1}`;
+        return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.index + 1}`;
     }
 
 
@@ -349,6 +349,26 @@ export class FacturasEditComponent implements OnInit {
           this.ItemsModel.descrip = this.ProductoList[index].descrip;
         }
     
+      }
+    }
+
+    eliminar() {
+      if (confirm('Confirma?')) {
+        let x = this.selection.selected;
+        this.ngxService.start();
+    
+        x.forEach(element => {
+
+          var index = this.FacturasModel.items.indexOf(element);
+          if (index > -1) {
+            this.FacturasModel.items.splice(index, 1);
+          }
+          this.ngxService.stop();
+
+        });  
+
+        //Refresca el datasource
+        this.dataSource = [...this.FacturasModel.items];
       }
     }
 

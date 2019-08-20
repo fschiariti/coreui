@@ -15,5 +15,7 @@ namespace facturawebApi.Interface
         bool Delete(Int64 id);
         bool Update(IVenta iventa);
         IQueryable<IVentaViewModel> GetAll();
+        List<IVentaViewModel> GetItemsById(Int64 id);
+
     }
 }
